@@ -17,21 +17,16 @@ font-family:Arial, Helvetica, sans-serif;
 display:flex;
 justify-content:center;
 gap:30px;
-padding:25px 10px;
+padding:25px;
 flex-wrap:wrap;
 }
-
 .nav a{
 color:#888;
-text-decoration:none;
-font-weight:bold;
 cursor:pointer;
+font-weight:bold;
 }
-
 .nav a.active,
-.nav a:hover{
-color:red;
-}
+.nav a:hover{color:red;}
 
 /* TITLE */
 .main-title{
@@ -52,46 +47,46 @@ object-fit:cover;
 }
 
 /* PAGE */
-.page{
-display:none;
-padding:0 8% 100px;
-}
+.page{display:none;padding:0 10% 100px;}
 .page.active{display:block;}
+
+/* ABOUT */
+.avatar{
+display:block;
+margin:40px auto;
+width:140px;
+height:140px;
+border-radius:50%;
+}
 
 /* GRID */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
 gap:30px;
 }
 
 /* CARD */
 .card{
 position:relative;
-height:200px;
+height:180px;
 background:#111;
-border:1px solid #333;
-cursor:pointer;
 overflow:hidden;
+cursor:pointer;
+border:1px solid #333;
 }
-
 .card video,
 .card img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
-
 .card span{
 position:absolute;
-left:50%;
-top:50%;
-transform:translate(-50%,-50%);
-color:#aaa;
+bottom:10px;
+left:10px;
+font-size:13px;
 }
-
-.card:hover span{opacity:0;}
-.card:hover{border-color:red;}
 
 /* overlay */
 .overlay{
@@ -104,22 +99,19 @@ height:100%;
 background:#000;
 z-index:999;
 }
-
 .overlay video,
 .overlay img{
 width:100%;
 height:100%;
 object-fit:contain;
 }
-
 .close{
 position:absolute;
 top:30px;
 right:40px;
-cursor:pointer;
 color:#aaa;
+cursor:pointer;
 }
-.close:hover{color:red;}
 </style>
 </head>
 
@@ -138,15 +130,23 @@ color:#aaa;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
+<video class="brand" src="brand.mp4" autoplay muted loop></video>
 
-<video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
-
-<!-- ABOUT -->
+<!-- ABOUT（不会再消失） -->
 <div id="about" class="page active">
-<p style="max-width:800px;margin:auto;line-height:1.8;color:#ccc;">
-Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems.
-His work explores computational perception and perceptual space through nonlinear audiovisual structures.
+
+<img src="images/avatar.jpg" class="avatar">
+
+<p style="max-width:800px;margin:auto;line-height:1.8;">
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
 </p>
+
+<br>
+
+<p style="max-width:800px;margin:auto;line-height:1.8;">
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，基于“计算感知”与“知觉空间”的方法论，在艺术、音乐与技术交织的语境中，探讨多重感知如何生成时间与空间的错位体验。作品实践主要分布于演唱会舞台、音乐节、高校艺术实验室、戏剧空间与美术馆。
+</p>
+
 </div>
 
 <!-- 各类目 -->
@@ -167,120 +167,100 @@ His work explores computational perception and perceptual space through nonlinea
 
 <script>
 
-/* 切换页面 */
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
-
 document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
-/* 打开视频 */
+/* ===== 视频读取 ===== */
+fetch("https://api.github.com/repos/JamMo404/jammo404.github.io/contents/videoall")
+.then(res=>res.json())
+.then(files=>{
+
+files.forEach(file=>{
+let name=file.name.toLowerCase()
+
+if(!name.endsWith(".mp4")) return
+
+let html=`
+<div class="card"
+onclick="openVideo('${file.download_url}')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<video src="${file.download_url}" muted loop></video>
+<span>${file.name.replace('.mp4','')}</span>
+</div>`
+
+if(name.startsWith("featured")) add("featuredGrid",html)
+else if(name.startsWith("video")) add("videoGrid",html)
+else if(name.startsWith("cgi")) add("cgiGrid",html)
+else if(name.startsWith("installation")) add("installationGrid",html)
+else if(name.startsWith("sound")) add("soundGrid",html)
+else if(name.startsWith("lab")) add("labGrid",html)
+
+})
+
+})
+
+/* ===== 图片读取（只读 images）===== */
+fetch("https://api.github.com/repos/JamMo404/jammo404.github.io/contents/images")
+.then(res=>res.json())
+.then(files=>{
+
+let index=1
+
+files.forEach(file=>{
+let name=file.name.toLowerCase()
+
+if(!(name.endsWith(".jpg")||name.endsWith(".png"))) return
+
+if(name.includes("avatar")) return
+
+let title="visual"+String(index).padStart(3,"0")
+index++
+
+let html=`
+<div class="card" onclick="openImg('${file.download_url}')">
+<img src="${file.download_url}">
+<span>${title}</span>
+</div>`
+
+add("visualGrid",html)
+
+})
+
+})
+
+function add(id,html){
+document.getElementById(id).innerHTML+=html
+}
+
+/* overlay */
 function openVideo(src){
-let v=document.getElementById('overlayVideo')
-let img=document.getElementById('overlayImg')
-
-img.style.display="none"
+let v=document.getElementById("overlayVideo")
+let i=document.getElementById("overlayImg")
+i.style.display="none"
 v.style.display="block"
-
 v.src=src
-document.getElementById('overlay').style.display='block'
+v.play()
+document.getElementById("overlay").style.display="block"
 }
 
-/* 打开图片 */
-function openImage(src){
-let v=document.getElementById('overlayVideo')
-let img=document.getElementById('overlayImg')
-
-v.pause()
+function openImg(src){
+let v=document.getElementById("overlayVideo")
+let i=document.getElementById("overlayImg")
 v.style.display="none"
-
-img.src=src
-img.style.display="block"
-
-document.getElementById('overlay').style.display='block'
+i.style.display="block"
+i.src=src
+document.getElementById("overlay").style.display="block"
 }
 
-/* 关闭 */
 function closeProject(){
-document.getElementById('overlay').style.display='none'
-document.getElementById('overlayVideo').pause()
+document.getElementById("overlay").style.display="none"
+document.getElementById("overlayVideo").pause()
 }
-
-/* 分类规则（关键） */
-function getCategory(name){
-name = name.toLowerCase()
-
-if(name.startsWith("featured")) return "featured"
-if(name.startsWith("video")) return "video"
-if(name.startsWith("cgi")) return "cgi"
-if(name.startsWith("installation")) return "installation"
-if(name.startsWith("sound")) return "sound"
-if(name.startsWith("lab")) return "lab"
-
-return null
-}
-
-/* 加载视频 */
-async function loadVideos(){
-let res = await fetch("https://api.github.com/repos/JamMo404/jammo404.github.io/contents/videoall")
-let files = await res.json()
-
-files.forEach(f=>{
-if(!f.name.endsWith(".mp4")) return
-
-let cat = getCategory(f.name)
-if(!cat) return
-
-let grid = document.getElementById(cat+"Grid")
-if(!grid) return
-
-let card = document.createElement("div")
-card.className="card"
-card.onclick=()=>openVideo("videoall/"+f.name)
-
-card.innerHTML=`
-<video src="videoall/${f.name}" muted loop playsinline></video>
-<span>${f.name}</span>
-`
-
-card.onmouseenter=()=>card.querySelector("video").play()
-card.onmouseleave=()=>{
-let v=card.querySelector("video")
-v.pause()
-v.currentTime=0
-}
-
-grid.appendChild(card)
-})
-}
-
-/* 加载图片 */
-async function loadImages(){
-let res = await fetch("https://api.github.com/repos/JamMo404/jammo404.github.io/contents/images")
-let files = await res.json()
-
-files.forEach(f=>{
-if(!f.name.match(/\.(jpg|png|webp)$/)) return
-
-let grid = document.getElementById("visualGrid")
-
-let card=document.createElement("div")
-card.className="card"
-card.onclick=()=>openImage("images/"+f.name)
-
-card.innerHTML=`
-<img src="images/${f.name}">
-<span>${f.name}</span>
-`
-
-grid.appendChild(card)
-})
-}
-
-loadVideos()
-loadImages()
 
 </script>
 
