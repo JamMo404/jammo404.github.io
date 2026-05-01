@@ -5,47 +5,46 @@
 <title>jammo</title>
 
 <style>
-body{
-margin:0;
-background:#000;
-color:#fff;
-font-family:Arial, Helvetica, sans-serif;
-}
+body{margin:0;background:#000;color:#fff;font-family:Arial, Helvetica, sans-serif;}
 
 /* NAV */
-.nav{
-display:flex;
-justify-content:center;
-gap:30px;
-padding:25px 10px;
-flex-wrap:wrap;
-}
-.nav a{
-color:#888;
-text-decoration:none;
-font-weight:bold;
-cursor:pointer;
-}
+.nav{display:flex;justify-content:center;gap:30px;padding:25px 10px;flex-wrap:wrap;}
+.nav a{color:#888;text-decoration:none;font-weight:bold;cursor:pointer;}
 .nav a.active,.nav a:hover{color:red}
+
+/* HERO */
+.hero{
+position:relative;
+height:400px;
+overflow:hidden;
+}
 
 /* TITLE */
 .main-title{
+position:relative;
+z-index:2;
 text-align:center;
 font-size:72px;
 font-weight:900;
 letter-spacing:6px;
-margin:40px 0 10px;
+margin:40px 0 0;
 }
 
-/* BRAND */
+/* BRAND 背景视频 */
 .brand{
-display:block;
-margin:0 auto 40px;
-width:320px;
-height:180px;
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) scale(5);
+width:100%;
+height:auto;
+min-width:100%;
+min-height:100%;
 object-fit:cover;
-transition:transform 0.2s ease-out, opacity 0.6s;
-opacity:0;
+z-index:1;
+opacity:0.25;
+pointer-events:none;
+filter:contrast(1.2) brightness(0.8);
 }
 
 /* AVATAR */
@@ -71,7 +70,6 @@ grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
 
-/* ROLE */
 .role{
 color:red;
 font-weight:bold;
@@ -81,7 +79,6 @@ font-size:18px;
 margin-bottom:22px;
 }
 
-/* TEXT */
 .text{
 color:#ccc;
 line-height:1.8;
@@ -103,6 +100,7 @@ column-gap:30px;
 @media(max-width:900px){
 .masonry{column-count:1;}
 }
+
 .masonry-item{
 break-inside:avoid;
 margin-bottom:30px;
@@ -137,6 +135,7 @@ color:#aaa;
 
 #workPage video{width:100%;cursor:pointer;}
 
+/* OVERLAY */
 .overlay{
 display:none;
 position:fixed;
@@ -169,7 +168,7 @@ cursor:pointer;
 <!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
-<a onclick="showPage('featured',this)">Featured Project</a>
+<a onclick="showPage('featured',this)">Featured</a>
 <a onclick="showPage('video',this)">Video</a>
 <a onclick="showPage('visual',this)">Visual</a>
 <a onclick="showPage('cgi',this)">CGI</a>
@@ -179,9 +178,10 @@ cursor:pointer;
 <a onclick="showPage('contact',this)">Contact</a>
 </div>
 
+<!-- HERO -->
+<div class="hero">
 <h1 class="main-title">JAM MO</h1>
 
-<!-- BRAND（移动端自动播放修复） -->
 <video class="brand"
 src="brand.mp4"
 autoplay
@@ -191,10 +191,10 @@ playsinline
 webkit-playsinline
 preload="auto">
 </video>
+</div>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
-
 <img src="images/avatar.jpg" class="avatar">
 
 <div class="about">
@@ -251,21 +251,6 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 
 <script>
-
-/* ===== BRAND 动态 ===== */
-const brand = document.querySelector(".brand")
-
-window.addEventListener("load",()=>{
-brand.style.opacity=1
-})
-
-window.addEventListener("mousemove",(e)=>{
-let x = (e.clientX/window.innerWidth - 0.5) * 20
-let y = (e.clientY/window.innerHeight - 0.5) * 20
-brand.style.transform = `translate(${x}px, ${y}px)`
-})
-
-/* ===== WORKS ===== */
 function createVideoCard(src,cover,title){
 return `
 <div>
@@ -293,21 +278,17 @@ return `
 
 function loadWorks(){
 let featured='',video='',cgi='',installation='',sound='',lab=''
-
 for(let i=1;i<=10;i++){
 let n=String(i).padStart(3,'0')
-
 featured+=`<div class="masonry-item">`+
 createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
 +`</div>`
-
 video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
 cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
 installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
 sound+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
 lab+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
 }
-
 document.getElementById('featuredGrid').innerHTML=featured
 document.getElementById('videoGrid').innerHTML=video
 document.getElementById('cgiGrid').innerHTML=cgi
@@ -323,7 +304,6 @@ visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
 document.getElementById('visualGrid').innerHTML=visual
 }
 
-/* ===== FEATURED 液体 ===== */
 function enableLiquidEffect(){
 const container = document.getElementById("featuredGrid")
 container.addEventListener("mousemove",(e)=>{
@@ -336,7 +316,6 @@ const dx = e.clientX - cx
 const dy = e.clientY - cy
 const dist = Math.sqrt(dx*dx + dy*dy)
 const maxDist = 300
-
 if(dist < maxDist){
 let force = (maxDist - dist)/maxDist
 let moveX = -dx * force * 0.25
@@ -350,8 +329,8 @@ item.style.transform="translate(0,0) scale(1)"
 })
 }
 
-/* ===== WORK PAGE ===== */
 function openWork(src,title){
+location.hash="work"
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById('workPage').classList.add('active')
 document.getElementById('workVideo').src=src
@@ -363,7 +342,6 @@ document.getElementById("workVideo").onclick=function(){
 this.requestFullscreen()
 }
 
-/* ===== IMAGE ===== */
 function openImage(src){
 document.getElementById('overlay').style.display='block'
 document.getElementById('overlayImg').src=src
@@ -372,17 +350,29 @@ function closeOverlay(){
 document.getElementById('overlay').style.display='none'
 }
 
-/* ===== NAV ===== */
 function showPage(id,el){
+location.hash=id
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
 document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
+function loadFromHash(){
+let id=location.hash.replace('#','')
+if(!id) id='about'
+if(document.getElementById(id)){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+}
+}
+
+window.addEventListener("hashchange",loadFromHash)
+
 window.onload=function(){
 loadWorks()
 enableLiquidEffect()
+loadFromHash()
 }
 </script>
 
