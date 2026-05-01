@@ -5,31 +5,97 @@
 <title>jammo</title>
 
 <style>
-body{margin:0;background:#000;color:#fff;font-family:Arial, Helvetica, sans-serif;}
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:Arial, Helvetica, sans-serif;
+}
 
-.nav{display:flex;justify-content:center;gap:30px;padding:25px 10px;flex-wrap:wrap;}
-.nav a{color:#888;text-decoration:none;font-weight:bold;cursor:pointer;}
+/* NAV */
+.nav{
+display:flex;
+justify-content:center;
+gap:30px;
+padding:25px 10px;
+flex-wrap:wrap;
+}
+.nav a{
+color:#888;
+text-decoration:none;
+font-weight:bold;
+cursor:pointer;
+}
 .nav a.active,.nav a:hover{color:red}
 
-.main-title{text-align:center;font-size:72px;font-weight:900;letter-spacing:6px;margin:40px 0 10px;}
+/* TITLE */
+.main-title{
+text-align:center;
+font-size:72px;
+font-weight:900;
+letter-spacing:6px;
+margin:40px 0 10px;
+}
 
-.brand{display:block;margin:0 auto 40px;width:320px;height:180px;object-fit:cover;}
+/* BRAND */
+.brand{
+display:block;
+margin:0 auto 40px;
+width:320px;
+height:180px;
+object-fit:cover;
+transition:transform 0.2s ease-out, opacity 0.6s;
+opacity:0;
+}
 
-.avatar{display:block;margin:40px auto;width:140px;height:140px;border-radius:50%;object-fit:cover;filter:grayscale(100%);}
+/* AVATAR */
+.avatar{
+display:block;
+margin:40px auto;
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+filter:grayscale(100%);
+}
 .avatar:hover{filter:none}
 
+/* PAGE */
 .page{display:none;padding:0 10% 100px;}
 .page.active{display:block}
 
-.about{display:grid;grid-template-columns:1fr 2fr 2fr;gap:40px;}
+/* ABOUT */
+.about{
+display:grid;
+grid-template-columns:1fr 2fr 2fr;
+gap:40px;
+}
 
-.role{color:red;font-weight:bold;font-size:18px;line-height:2;word-break:keep-all;}
+/* ROLE */
+.role{
+color:red;
+font-weight:bold;
+font-size:18px;
+}
+.role div{
+margin-bottom:22px;
+}
 
-.text{color:#ccc;line-height:1.8;font-family:"Courier New", monospace;}
+/* TEXT */
+.text{
+color:#ccc;
+line-height:1.8;
+font-family:"Courier New", monospace;
+}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px;}
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+gap:30px;
+}
 
-/* ===== FEATURED 瀑布流 ===== */
+/* FEATURED */
 .masonry{
 column-count:2;
 column-gap:30px;
@@ -37,12 +103,10 @@ column-gap:30px;
 @media(max-width:900px){
 .masonry{column-count:1;}
 }
-
 .masonry-item{
 break-inside:avoid;
 margin-bottom:30px;
 transition:transform 0.12s ease-out;
-will-change:transform;
 }
 
 /* CARD */
@@ -116,27 +180,41 @@ cursor:pointer;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-<video class="brand" src="brand.mp4" autoplay muted loop></video>
+
+<!-- BRAND（移动端自动播放修复） -->
+<video class="brand"
+src="brand.mp4"
+autoplay
+muted
+loop
+playsinline
+webkit-playsinline
+preload="auto">
+</video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
+
 <img src="images/avatar.jpg" class="avatar">
+
 <div class="about">
+
 <div class="role">
-MULTIDISCIPLINARY ARTIST<br>
-AUDIO-VISUAL ARTIST<br>
-3D ARTIST<br>
-MULTIMEDIA DIRECTOR<br>
-INTERACTIVE DEVELOPER
+<div>MULTIDISCIPLINARY ARTIST</div>
+<div>AUDIO-VISUAL ARTIST</div>
+<div>3D ARTIST</div>
+<div>MULTIMEDIA DIRECTOR</div>
+<div>INTERACTIVE DEVELOPER</div>
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，通过跨学科与跨文化实践探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。作品实践主要呈现在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
 </div>
+
 </div>
 </div>
 
@@ -145,7 +223,7 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 <div class="masonry" id="featuredGrid"></div>
 </div>
 
-<!-- 其它类目 -->
+<!-- 其它 -->
 <div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
 <div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
 <div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
@@ -157,7 +235,7 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 <p style="text-align:center;">Email: jam.mo.404lab@gmail.com</p>
 </div>
 
-<!-- 作品页 -->
+<!-- WORK PAGE -->
 <div id="workPage" class="page">
 <div style="max-width:900px;margin:auto;padding-top:40px;">
 <h2 id="workTitle"></h2>
@@ -166,13 +244,28 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 </div>
 
-<!-- 图片 overlay -->
+<!-- OVERLAY -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeOverlay()">CLOSE</div>
 <img id="overlayImg">
 </div>
 
 <script>
+
+/* ===== BRAND 动态 ===== */
+const brand = document.querySelector(".brand")
+
+window.addEventListener("load",()=>{
+brand.style.opacity=1
+})
+
+window.addEventListener("mousemove",(e)=>{
+let x = (e.clientX/window.innerWidth - 0.5) * 20
+let y = (e.clientY/window.innerHeight - 0.5) * 20
+brand.style.transform = `translate(${x}px, ${y}px)`
+})
+
+/* ===== WORKS ===== */
 function createVideoCard(src,cover,title){
 return `
 <div>
@@ -230,56 +323,34 @@ visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
 document.getElementById('visualGrid').innerHTML=visual
 }
 
-/* ===== 液体挤压（2D算法） ===== */
+/* ===== FEATURED 液体 ===== */
 function enableLiquidEffect(){
-
 const container = document.getElementById("featuredGrid")
-
 container.addEventListener("mousemove",(e)=>{
-
 const items = container.querySelectorAll(".masonry-item")
-
 items.forEach(item=>{
-
 const rect = item.getBoundingClientRect()
-
 const cx = rect.left + rect.width/2
 const cy = rect.top + rect.height/2
-
 const dx = e.clientX - cx
 const dy = e.clientY - cy
-
 const dist = Math.sqrt(dx*dx + dy*dy)
 const maxDist = 300
 
 if(dist < maxDist){
-
-let force = (maxDist - dist) / maxDist
-
+let force = (maxDist - dist)/maxDist
 let moveX = -dx * force * 0.25
 let moveY = -dy * force * 0.25
-
 let scale = 1 + force * 0.35
-
-item.style.transform =
-`translate(${moveX}px, ${moveY}px) scale(${scale})`
-
+item.style.transform = `translate(${moveX}px,${moveY}px) scale(${scale})`
 }else{
-item.style.transform = "translate(0,0) scale(1)"
+item.style.transform="translate(0,0) scale(1)"
+}
+})
+})
 }
 
-})
-
-})
-
-container.addEventListener("mouseleave",()=>{
-document.querySelectorAll(".masonry-item").forEach(i=>{
-i.style.transform = "translate(0,0) scale(1)"
-})
-})
-
-}
-
+/* ===== WORK PAGE ===== */
 function openWork(src,title){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById('workPage').classList.add('active')
@@ -288,10 +359,11 @@ document.getElementById('workTitle').innerText=title
 document.getElementById('workDesc').innerText="Project description..."
 }
 
-document.getElementById("workVideo").onclick = function(){
-if(this.requestFullscreen){this.requestFullscreen()}
+document.getElementById("workVideo").onclick=function(){
+this.requestFullscreen()
 }
 
+/* ===== IMAGE ===== */
 function openImage(src){
 document.getElementById('overlay').style.display='block'
 document.getElementById('overlayImg').src=src
@@ -300,6 +372,7 @@ function closeOverlay(){
 document.getElementById('overlay').style.display='none'
 }
 
+/* ===== NAV ===== */
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
