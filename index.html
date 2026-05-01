@@ -16,8 +16,8 @@ font-family:Arial, Helvetica, sans-serif;
 .nav{
 display:flex;
 justify-content:center;
-gap:40px;
-padding:30px 0;
+gap:30px;
+padding:25px 10px;
 flex-wrap:wrap;
 }
 .nav a{
@@ -27,14 +27,16 @@ font-weight:bold;
 cursor:pointer;
 }
 .nav a.active,
-.nav a:hover{color:red;}
+.nav a:hover{
+color:red;
+}
 
 /* TITLE */
 .main-title{
 text-align:center;
 font-size:72px;
 font-weight:900;
-letter-spacing:8px;
+letter-spacing:6px;
 margin:40px 0 10px;
 }
 
@@ -47,11 +49,7 @@ height:180px;
 object-fit:cover;
 }
 
-/* PAGE */
-.page{display:none;}
-.page.active{display:block;}
-
-/* ABOUT */
+/* AVATAR */
 .avatar{
 display:block;
 margin:40px auto;
@@ -59,21 +57,38 @@ width:140px;
 height:140px;
 border-radius:50%;
 object-fit:cover;
+filter:grayscale(100%);
 }
+.avatar:hover{filter:none}
 
+/* PAGE */
+.page{
+display:none;
+padding:0 10% 100px;
+}
+.page.active{display:block}
+
+/* ABOUT */
 .about{
-max-width:900px;
-margin:auto;
-text-align:center;
-line-height:1.8;
-color:#ccc;
+display:grid;
+grid-template-columns:1fr 2fr 2fr;
+gap:40px;
 }
 
+/* ROLE 不换词 */
 .role{
-margin:30px 0;
+color:red;
 font-weight:bold;
-text-transform:uppercase;
+font-size:18px;
 line-height:2;
+word-break:keep-all;
+}
+
+/* TEXT */
+.text{
+color:#ccc;
+line-height:1.8;
+font-family:"Courier New", monospace;
 }
 
 /* GRID */
@@ -81,59 +96,55 @@ line-height:2;
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
-padding:40px 10%;
 }
 
 /* CARD */
 .card{
+position:relative;
+height:220px;
+background:#111;
+border:1px solid #333;
 cursor:pointer;
+overflow:hidden;
 }
+
 .card video,
 .card img{
 width:100%;
-height:200px;
+height:100%;
 object-fit:cover;
 }
-.card:hover{transform:scale(1.03);}
 
-/* TITLE + DESC */
-.meta{
-padding:10px 5px;
+.card span{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+color:#aaa;
 }
-.meta-title{
+.card:hover span{opacity:0}
+.card:hover{border-color:red}
+
+/* INFO */
+.info{
+margin-top:8px;
 font-size:14px;
-font-weight:bold;
-}
-.meta-desc{
-font-size:12px;
 color:#aaa;
 }
 
-/* ===== Featured 瀑布流 ===== */
-.masonry{
-column-count:2;
-column-gap:40px;
-padding:40px 10%;
-}
-@media(max-width:900px){
-.masonry{column-count:1;}
-}
-.item{
-break-inside:avoid;
-margin-bottom:40px;
-}
-
-/* overlay */
+/* OVERLAY */
 .overlay{
 display:none;
 position:fixed;
-top:0;left:0;
+top:0;
+left:0;
 width:100%;
 height:100%;
 background:#000;
 z-index:999;
 }
-.overlay video{
+.overlay video,
+.overlay img{
 width:100%;
 height:100%;
 object-fit:contain;
@@ -141,9 +152,11 @@ object-fit:contain;
 .close{
 position:absolute;
 top:20px;
-right:40px;
+right:30px;
+color:#aaa;
 cursor:pointer;
 }
+.close:hover{color:red}
 </style>
 </head>
 
@@ -152,7 +165,7 @@ cursor:pointer;
 <!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
-<a onclick="showPage('featured',this)">Featured Project</a>
+<a onclick="showPage('featured',this)">Featured</a>
 <a onclick="showPage('video',this)">Video</a>
 <a onclick="showPage('visual',this)">Visual</a>
 <a onclick="showPage('cgi',this)">CGI</a>
@@ -163,172 +176,148 @@ cursor:pointer;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-<video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
+
+<video class="brand" src="brand.mp4" autoplay muted loop></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
+
 <img src="images/avatar.jpg" class="avatar">
+
 <div class="about">
 
 <div class="role">
-MUTIDISCIPLINARY ARTIST<br>
+MULTIDISCIPLINARY ARTIST<br>
 AUDIO-VISUAL ARTIST<br>
 3D ARTIST<br>
 MULTIMEDIA DIRECTOR<br>
 INTERACTIVE DEVELOPER
 </div>
 
-<p>
-Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures.
-</p>
+<div class="text">
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
+</div>
 
-<p>
-Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音艺术与交互系统的融合，围绕计算感知与知觉空间展开创作。
-</p>
+<div class="text">
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，通过跨学科与跨文化实践探讨多元感知如何生成时间与空间的错位体验。作品多呈现在演唱会舞台、音乐节、高校实验室、戏剧空间与美术馆。
+</div>
 
 </div>
 </div>
 
-<!-- FEATURED -->
-<div id="featured" class="page">
-<div class="masonry" id="featuredGrid"></div>
+<!-- GRID TEMPLATE -->
+<script>
+function createVideoCard(src,cover,title){
+return `
+<div>
+<div class="card"
+onclick="openVideo('${src}')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<video src="${src}" poster="${cover}" muted loop></video>
+<span>${title}</span>
 </div>
+<div class="info">${title}</div>
+</div>`
+}
 
-<!-- VIDEO -->
-<div id="video" class="page">
-<div class="grid" id="videoGrid"></div>
+function createImageCard(src,title){
+return `
+<div>
+<div class="card" onclick="openImage('${src}')">
+<img src="${src}">
+<span>${title}</span>
 </div>
+<div class="info">${title}</div>
+</div>`
+}
 
-<!-- VISUAL -->
-<div id="visual" class="page">
-<div class="grid" id="visualGrid"></div>
-</div>
+/* 自动生成 */
+function loadWorks(){
 
-<!-- CGI -->
-<div id="cgi" class="page">
-<div class="grid" id="cgiGrid"></div>
-</div>
+let featured='',video='',cgi='',installation='',sound='',lab=''
 
-<!-- INSTALLATION -->
-<div id="installation" class="page">
-<div class="grid" id="installationGrid"></div>
-</div>
+for(let i=1;i<=10;i++){
 
-<!-- SOUND -->
-<div id="sound" class="page">
-<div class="grid" id="soundGrid"></div>
-</div>
+let n=String(i).padStart(3,'0')
 
-<!-- LAB -->
-<div id="lab" class="page">
-<div class="grid" id="labGrid"></div>
-</div>
+featured+=createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
+video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
+cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
+installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
+sound+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
+lab+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
+}
 
-<!-- CONTACT -->
+document.getElementById('featuredGrid').innerHTML=featured
+document.getElementById('videoGrid').innerHTML=video
+document.getElementById('cgiGrid').innerHTML=cgi
+document.getElementById('installationGrid').innerHTML=installation
+document.getElementById('soundGrid').innerHTML=sound
+document.getElementById('labGrid').innerHTML=lab
+
+/* VISUAL（只读图片） */
+let visual=''
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
+}
+document.getElementById('visualGrid').innerHTML=visual
+}
+
+window.onload=loadWorks
+</script>
+
+<!-- PAGES -->
+<div id="featured" class="page"><div class="grid" id="featuredGrid"></div></div>
+<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
+<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
+<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
+<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
+<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
+<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+
 <div id="contact" class="page">
-<div style="text-align:center;padding:100px;">
-Email: your@email.com
-</div>
+<p>Email: jam.mo.404lab@gmail.com</p>
 </div>
 
 <!-- OVERLAY -->
 <div id="overlay" class="overlay">
-<div class="close" onclick="closeProject()">CLOSE</div>
+<div class="close" onclick="closeOverlay()">CLOSE</div>
 <video id="overlayVideo" controls autoplay></video>
+<img id="overlayImg" style="display:none;">
 </div>
 
 <script>
-const videoPath="videoall/";
-const imgPath="images/";
-
-/* 页面切换 */
 function showPage(id,el){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-document.getElementById(id).classList.add('active');
-document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
-el.classList.add('active');
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
+el.classList.add('active')
 }
 
-/* 播放 */
-function openProject(src){
-let v=document.getElementById("overlayVideo");
-v.src=src;
-v.play();
-document.getElementById("overlay").style.display="block";
-}
-function closeProject(){
-document.getElementById("overlay").style.display="none";
-document.getElementById("overlayVideo").pause();
+function openVideo(src){
+let v=document.getElementById('overlayVideo')
+let i=document.getElementById('overlayImg')
+i.style.display='none'
+v.style.display='block'
+v.src=src
+document.getElementById('overlay').style.display='block'
 }
 
-/* 卡片 */
-function makeCard(name,cover,title){
-return `
-<div class="card"
-onclick="openProject('${videoPath+name}.mp4')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-
-<video src="${videoPath+name}.mp4"
-poster="${imgPath+cover}.jpg"
-muted loop></video>
-
-<div class="meta">
-<div class="meta-title">${title}</div>
-<div class="meta-desc">${name}</div>
-</div>
-
-</div>`;
+function openImage(src){
+let v=document.getElementById('overlayVideo')
+let i=document.getElementById('overlayImg')
+v.style.display='none'
+i.style.display='block'
+i.src=src
+document.getElementById('overlay').style.display='block'
 }
 
-/* FEATURED */
-function loadFeatured(){
-let html="";
-for(let i=1;i<=12;i++){
-let n=String(i).padStart(3,'0');
-html+=`
-<div class="item">
-${makeCard("featured"+n,"featuredcover"+n,"FEATURED "+n)}
-</div>`;
+function closeOverlay(){
+document.getElementById('overlay').style.display='none'
+document.getElementById('overlayVideo').pause()
 }
-document.getElementById("featuredGrid").innerHTML=html;
-}
-
-/* 分类 */
-function loadCategory(prefix,grid,title){
-let html="";
-for(let i=1;i<=12;i++){
-let n=String(i).padStart(3,'0');
-html+=makeCard(prefix+n,prefix+"cover"+n,title+" "+n);
-}
-document.getElementById(grid).innerHTML=html;
-}
-
-/* VISUAL */
-function loadVisual(){
-let html="";
-for(let i=1;i<=20;i++){
-let n=String(i).padStart(3,'0');
-html+=`
-<div class="card">
-<img src="${imgPath}visual${n}.jpg">
-<div class="meta">
-<div class="meta-title">VISUAL ${n}</div>
-</div>
-</div>`;
-}
-document.getElementById("visualGrid").innerHTML=html;
-}
-
-/* INIT */
-loadFeatured();
-loadCategory("video","videoGrid","VIDEO");
-loadCategory("cgi","cgiGrid","CGI");
-loadCategory("installation","installationGrid","INSTALLATION");
-loadCategory("sound","soundGrid","SOUND");
-loadCategory("lab","labGrid","LAB");
-loadVisual();
-
 </script>
 
 </body>
