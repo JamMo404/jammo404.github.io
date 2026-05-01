@@ -96,10 +96,16 @@ color:#ddd;
 line-height:1.8;
 }
 
-/* 👉 Role 单行 + 大写 */
+/* ===== Role（多行 + 不拆词）===== */
 .role-line{
 color:red;
 text-transform:uppercase;
+display:flex;
+flex-wrap:wrap;
+gap:10px 20px;
+}
+
+.role-line span{
 white-space:nowrap;
 }
 
@@ -176,6 +182,22 @@ cursor:pointer;
 color:#aaa;
 }
 .close:hover{color:red;}
+
+/* ===== 手机适配 ===== */
+@media(max-width:768px){
+.main-title{
+font-size:48px;
+}
+
+.about{
+grid-template-columns:1fr;
+}
+
+.brand{
+width:90%;
+height:auto;
+}
+}
 </style>
 </head>
 
@@ -200,7 +222,7 @@ color:#aaa;
 <!-- brand -->
 <video class="brand" src="brand.mp4" autoplay muted loop playsinline preload="auto"></video>
 
-<!-- ABOUT -->
+<!-- ===== ABOUT ===== -->
 <div id="about" class="page active">
 
 <img src="images/avatar.jpg" class="avatar">
@@ -210,7 +232,11 @@ color:#aaa;
 <div>
 <h3>PRACTICE</h3>
 <p class="role-line">
-MULTIDISCIPLINARY ARTIST / AUDIO-VISUAL ARTIST / 3D ARTIST / MULTIMEDIA DIRECTOR / INTERACTIVE DEVELOPER
+<span>MULTIDISCIPLINARY ARTIST</span>
+<span>AUDIO-VISUAL ARTIST</span>
+<span>3D ARTIST</span>
+<span>MULTIMEDIA DIRECTOR</span>
+<span>INTERACTIVE DEVELOPER</span>
 </p>
 </div>
 
