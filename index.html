@@ -13,62 +13,23 @@ body{margin:0;background:#000;color:#fff;font-family:Arial, Helvetica, sans-seri
 
 .main-title{text-align:center;font-size:72px;font-weight:900;letter-spacing:6px;margin:40px 0 10px;}
 
-/* ✅ brand 自动播放修复 */
-.brand{
-display:block;
-margin:0 auto 40px;
-width:320px;
-height:180px;
-object-fit:cover;
-}
+.brand{display:block;margin:0 auto 40px;width:320px;height:180px;object-fit:cover;}
 
-/* avatar */
-.avatar{
-display:block;
-margin:40px auto;
-width:140px;
-height:140px;
-border-radius:50%;
-object-fit:cover;
-filter:grayscale(100%);
-}
+.avatar{display:block;margin:40px auto;width:140px;height:140px;border-radius:50%;object-fit:cover;filter:grayscale(100%);}
 .avatar:hover{filter:none}
 
-/* page */
 .page{display:none;padding:0 10% 100px;}
 .page.active{display:block}
 
-/* about */
-.about{
-display:grid;
-grid-template-columns:1fr 2fr 2fr;
-gap:40px;
-}
+.about{display:grid;grid-template-columns:1fr 2fr 2fr;gap:40px;}
 
-/* ✅ role：每行间距（不是换行） */
-.role div{
-color:red;
-font-weight:bold;
-font-size:18px;
-margin-bottom:20px;
-word-break:keep-all;
-}
+.role{color:red;font-weight:bold;font-size:18px;line-height:2;word-break:keep-all;}
 
-/* text */
-.text{
-color:#ccc;
-line-height:1.8;
-font-family:"Courier New", monospace;
-}
+.text{color:#ccc;line-height:1.8;font-family:"Courier New", monospace;}
 
-/* grid */
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-gap:30px;
-}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:30px;}
 
-/* masonry */
+/* ===== FEATURED 瀑布流 ===== */
 .masonry{
 column-count:2;
 column-gap:30px;
@@ -81,9 +42,10 @@ column-gap:30px;
 break-inside:avoid;
 margin-bottom:30px;
 transition:transform 0.12s ease-out;
+will-change:transform;
 }
 
-/* card */
+/* CARD */
 .card{
 position:relative;
 height:220px;
@@ -114,8 +76,10 @@ color:#aaa;
 .overlay{
 display:none;
 position:fixed;
-top:0;left:0;
-width:100%;height:100%;
+top:0;
+left:0;
+width:100%;
+height:100%;
 background:#000;
 z-index:999;
 }
@@ -124,6 +88,7 @@ width:100%;
 height:100%;
 object-fit:contain;
 }
+
 .close{
 position:absolute;
 top:20px;
@@ -137,6 +102,7 @@ cursor:pointer;
 
 <body>
 
+<!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
 <a onclick="showPage('featured',this)">Featured</a>
@@ -150,45 +116,36 @@ cursor:pointer;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
-<!-- ✅ 自动播放兼容 -->
-<video class="brand"
-src="brand.mp4"
-autoplay
-muted
-loop
-playsinline
-webkit-playsinline>
-</video>
+<video class="brand" src="brand.mp4" autoplay muted loop></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
-
 <img src="images/avatar.jpg" class="avatar">
-
 <div class="about">
-
 <div class="role">
-<div>MULTIDISCIPLINARY ARTIST</div>
-<div>AUDIO-VISUAL ARTIST</div>
-<div>3D ARTIST</div>
-<div>MULTIMEDIA DIRECTOR</div>
-<div>INTERACTIVE DEVELOPER</div>
+MULTIDISCIPLINARY ARTIST<br>
+AUDIO-VISUAL ARTIST<br>
+3D ARTIST<br>
+MULTIMEDIA DIRECTOR<br>
+INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。
+</div>
+</div>
 </div>
 
-</div>
+<!-- FEATURED -->
+<div id="featured" class="page">
+<div class="masonry" id="featuredGrid"></div>
 </div>
 
-<!-- 页面结构保持不变 -->
-<div id="featured" class="page"><div class="masonry" id="featuredGrid"></div></div>
+<!-- 其它类目 -->
 <div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
 <div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
 <div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
@@ -209,17 +166,150 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 </div>
 
+<!-- 图片 overlay -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeOverlay()">CLOSE</div>
 <img id="overlayImg">
 </div>
 
 <script>
+function createVideoCard(src,cover,title){
+return `
+<div>
+<div class="card"
+onclick="openWork('${src}','${title}')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<video src="${src}" poster="${cover}" muted loop></video>
+<span>${title}</span>
+</div>
+<div class="info">${title}</div>
+</div>`
+}
+
+function createImageCard(src,title){
+return `
+<div>
+<div class="card" onclick="openImage('${src}')">
+<img src="${src}">
+<span>${title}</span>
+</div>
+<div class="info">${title}</div>
+</div>`
+}
+
+function loadWorks(){
+let featured='',video='',cgi='',installation='',sound='',lab=''
+
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+
+featured+=`<div class="masonry-item">`+
+createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
++`</div>`
+
+video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
+cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
+installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
+sound+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
+lab+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
+}
+
+document.getElementById('featuredGrid').innerHTML=featured
+document.getElementById('videoGrid').innerHTML=video
+document.getElementById('cgiGrid').innerHTML=cgi
+document.getElementById('installationGrid').innerHTML=installation
+document.getElementById('soundGrid').innerHTML=sound
+document.getElementById('labGrid').innerHTML=lab
+
+let visual=''
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
+}
+document.getElementById('visualGrid').innerHTML=visual
+}
+
+/* ===== 液体挤压（2D算法） ===== */
+function enableLiquidEffect(){
+
+const container = document.getElementById("featuredGrid")
+
+container.addEventListener("mousemove",(e)=>{
+
+const items = container.querySelectorAll(".masonry-item")
+
+items.forEach(item=>{
+
+const rect = item.getBoundingClientRect()
+
+const cx = rect.left + rect.width/2
+const cy = rect.top + rect.height/2
+
+const dx = e.clientX - cx
+const dy = e.clientY - cy
+
+const dist = Math.sqrt(dx*dx + dy*dy)
+const maxDist = 300
+
+if(dist < maxDist){
+
+let force = (maxDist - dist) / maxDist
+
+let moveX = -dx * force * 0.25
+let moveY = -dy * force * 0.25
+
+let scale = 1 + force * 0.35
+
+item.style.transform =
+`translate(${moveX}px, ${moveY}px) scale(${scale})`
+
+}else{
+item.style.transform = "translate(0,0) scale(1)"
+}
+
+})
+
+})
+
+container.addEventListener("mouseleave",()=>{
+document.querySelectorAll(".masonry-item").forEach(i=>{
+i.style.transform = "translate(0,0) scale(1)"
+})
+})
+
+}
+
+function openWork(src,title){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById('workPage').classList.add('active')
+document.getElementById('workVideo').src=src
+document.getElementById('workTitle').innerText=title
+document.getElementById('workDesc').innerText="Project description..."
+}
+
+document.getElementById("workVideo").onclick = function(){
+if(this.requestFullscreen){this.requestFullscreen()}
+}
+
+function openImage(src){
+document.getElementById('overlay').style.display='block'
+document.getElementById('overlayImg').src=src
+}
+function closeOverlay(){
+document.getElementById('overlay').style.display='none'
+}
+
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
 document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
+}
+
+window.onload=function(){
+loadWorks()
+enableLiquidEffect()
 }
 </script>
 
