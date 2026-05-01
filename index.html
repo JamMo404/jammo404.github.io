@@ -75,7 +75,7 @@ grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
 
-/* ROLE 不换词 */
+/* ROLE */
 .role{
 color:red;
 font-weight:bold;
@@ -96,6 +96,19 @@ font-family:"Courier New", monospace;
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
+}
+
+/* ===== FEATURED 瀑布流 ===== */
+.masonry{
+column-count:2;
+column-gap:30px;
+}
+@media(max-width:900px){
+.masonry{column-count:1;}
+}
+.masonry-item{
+break-inside:avoid;
+margin-bottom:30px;
 }
 
 /* CARD */
@@ -195,17 +208,17 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，通过跨学科与跨文化实践探讨多元感知如何生成时间与空间的错位体验。作品多呈现在演唱会舞台、音乐节、高校实验室、戏剧空间与美术馆。
+Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音艺术与交互系统的融合。
 </div>
 
 </div>
 </div>
 
-<!-- GRID TEMPLATE -->
+<!-- JS TEMPLATE -->
 <script>
 function createVideoCard(src,cover,title){
 return `
@@ -241,7 +254,10 @@ for(let i=1;i<=10;i++){
 
 let n=String(i).padStart(3,'0')
 
-featured+=createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
+featured+=`<div class="masonry-item">`+
+createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
++`</div>`
+
 video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
 cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
 installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
@@ -256,7 +272,7 @@ document.getElementById('installationGrid').innerHTML=installation
 document.getElementById('soundGrid').innerHTML=sound
 document.getElementById('labGrid').innerHTML=lab
 
-/* VISUAL（只读图片） */
+/* VISUAL */
 let visual=''
 for(let i=1;i<=10;i++){
 let n=String(i).padStart(3,'0')
@@ -269,7 +285,10 @@ window.onload=loadWorks
 </script>
 
 <!-- PAGES -->
-<div id="featured" class="page"><div class="grid" id="featuredGrid"></div></div>
+<div id="featured" class="page">
+<div class="masonry" id="featuredGrid"></div>
+</div>
+
 <div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
 <div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
 <div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
