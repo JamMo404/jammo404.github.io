@@ -68,7 +68,6 @@ display:grid;
 grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
-
 .typewriter{
 font-family:"Courier New", monospace;
 color:#ddd;
@@ -93,9 +92,7 @@ gap:30px;
 }
 
 /* 卡片 */
-.card{
-cursor:pointer;
-}
+.card{cursor:pointer;}
 
 .media{
 position:relative;
@@ -105,12 +102,7 @@ border:1px solid #333;
 overflow:hidden;
 }
 
-.media video{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
+.media video,
 .media img{
 width:100%;
 height:100%;
@@ -118,18 +110,12 @@ object-fit:cover;
 }
 
 /* hover 播放 */
-.card:hover .media video{
-opacity:1;
-}
-
 .card:hover .media{
 border-color:red;
 }
 
 /* 文本 */
-.info{
-margin-top:10px;
-}
+.info{margin-top:10px;}
 .info h4{margin:0;}
 .info p{color:#aaa;font-size:14px;}
 
@@ -190,11 +176,9 @@ color:#aaa;
 
 <!-- ===== ABOUT ===== -->
 <div id="about" class="page active">
-
 <img src="images/avatar.jpg" class="avatar">
 
 <div class="about">
-
 <div>
 <p class="role-line">
 <span>MULTIDISCIPLINARY ARTIST</span>
@@ -218,6 +202,59 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
 </p>
 </div>
+</div>
+</div>
+
+<!-- ===== FEATURED ===== -->
+<div id="featured" class="page">
+<h2>FeaturedProject</h2>
+<div class="grid">
+
+<div class="card" onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video1.mp4" muted loop></video></div>
+<div class="info"><h4>Project 01</h4><p>Featured audiovisual</p></div>
+</div>
+
+<div class="card" onclick="openProject('video2.mp4','Project 02','Installation','Realtime')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video2.mp4" muted loop></video></div>
+<div class="info"><h4>Project 02</h4><p>Realtime system</p></div>
+</div>
+
+</div>
+</div>
+
+<!-- ===== VIDEO ===== -->
+<div id="video" class="page">
+<h2>Video</h2>
+<div class="grid">
+
+<div class="card" onclick="openProject('video1.mp4','Video 01','Visual','Sound')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video1.mp4" muted loop></video></div>
+<div class="info"><h4>Video 01</h4><p>Realtime visual</p></div>
+</div>
+
+<div class="card" onclick="openProject('video2.mp4','Video 02','Experiment','AV')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video2.mp4" muted loop></video></div>
+<div class="info"><h4>Video 02</h4><p>Experimental AV</p></div>
+</div>
+
+</div>
+</div>
+
+<!-- ===== VISUAL ===== -->
+<div id="visual" class="page">
+<h2>Visual</h2>
+<div class="grid">
+
+<div class="card">
+<div class="media"><img src="images/visual1.jpg"></div>
+<div class="info"><h4>Visual 01</h4><p>Still image</p></div>
+</div>
+
+<div class="card">
+<div class="media"><img src="images/visual2.jpg"></div>
+<div class="info"><h4>Visual 02</h4><p>Artwork</p></div>
+</div>
 
 </div>
 </div>
@@ -227,17 +264,14 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 <h2>CGI</h2>
 <div class="grid">
 
-<div class="card"
-onclick="openProject('video1.mp4','CGI Work','3D Render','Blender + UE')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media">
-<video src="video1.mp4" muted loop></video>
+<div class="card" onclick="openProject('video1.mp4','CGI 01','Render','UE')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video1.mp4" muted loop></video></div>
+<div class="info"><h4>CGI 01</h4><p>Procedural render</p></div>
 </div>
-<div class="info">
-<h4>CGI Work</h4>
-<p>3D procedural render</p>
-</div>
+
+<div class="card" onclick="openProject('video2.mp4','CGI 02','Animation','Blender')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video2.mp4" muted loop></video></div>
+<div class="info"><h4>CGI 02</h4><p>3D animation</p></div>
 </div>
 
 </div>
@@ -248,17 +282,14 @@ onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
 <h2>Installation</h2>
 <div class="grid">
 
-<div class="card"
-onclick="openProject('video1.mp4','Installation','Interactive Space','Sensor + TouchDesigner')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media">
-<video src="video1.mp4" muted loop></video>
+<div class="card" onclick="openProject('video1.mp4','Install 01','Interactive','TD')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video1.mp4" muted loop></video></div>
+<div class="info"><h4>Install 01</h4><p>Interactive space</p></div>
 </div>
-<div class="info">
-<h4>Installation</h4>
-<p>Interactive audiovisual space</p>
-</div>
+
+<div class="card" onclick="openProject('video2.mp4','Install 02','Stage','Sensor')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video2.mp4" muted loop></video></div>
+<div class="info"><h4>Install 02</h4><p>Stage system</p></div>
 </div>
 
 </div>
@@ -269,17 +300,14 @@ onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
 <h2>Sound</h2>
 <div class="grid">
 
-<div class="card"
-onclick="openProject('video2.mp4','Sound Work','Audio Design','Spatial Audio')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media">
-<video src="video2.mp4" muted loop></video>
+<div class="card" onclick="openProject('video1.mp4','Sound 01','Audio','Mix')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video1.mp4" muted loop></video></div>
+<div class="info"><h4>Sound 01</h4><p>Sound design</p></div>
 </div>
-<div class="info">
-<h4>Sound Work</h4>
-<p>Sound design / composition</p>
-</div>
+
+<div class="card" onclick="openProject('video2.mp4','Sound 02','Spatial','Live')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video2.mp4" muted loop></video></div>
+<div class="info"><h4>Sound 02</h4><p>Spatial audio</p></div>
 </div>
 
 </div>
@@ -290,20 +318,23 @@ onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
 <h2>Lab</h2>
 <div class="grid">
 
-<div class="card"
-onclick="openProject('video2.mp4','Experiment','Realtime Test','AI + Visual')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media">
-<video src="video2.mp4" muted loop></video>
+<div class="card" onclick="openProject('video1.mp4','Lab 01','AI','Test')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video1.mp4" muted loop></video></div>
+<div class="info"><h4>Lab 01</h4><p>Realtime test</p></div>
 </div>
-<div class="info">
-<h4>Experiment</h4>
-<p>Realtime experiment</p>
-</div>
+
+<div class="card" onclick="openProject('video2.mp4','Lab 02','System','Code')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media"><video src="video2.mp4" muted loop></video></div>
+<div class="info"><h4>Lab 02</h4><p>System experiment</p></div>
 </div>
 
 </div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+<h2>Contact</h2>
+<p>Email: jam.mo.404lab@gmail.com</p>
 </div>
 
 <!-- overlay -->
