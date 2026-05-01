@@ -5,44 +5,48 @@
 <title>jammo</title>
 
 <style>
-body{margin:0;background:#000;color:#fff;font-family:Arial, Helvetica, sans-serif;}
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:Arial, Helvetica, sans-serif;
+}
 
 /* NAV */
-.nav{display:flex;justify-content:center;gap:30px;padding:25px 10px;flex-wrap:wrap;}
-.nav a{color:#888;text-decoration:none;font-weight:bold;cursor:pointer;}
-.nav a.active,.nav a:hover{color:red}
-
-/* HERO */
-.hero{position:relative;height:400px;overflow:hidden;}
+.nav{
+display:flex;
+justify-content:center;
+gap:30px;
+padding:25px 10px;
+flex-wrap:wrap;
+}
+.nav a{
+color:#888;
+text-decoration:none;
+font-weight:bold;
+cursor:pointer;
+}
+.nav a.active,
+.nav a:hover{
+color:red;
+}
 
 /* TITLE */
 .main-title{
-position:relative;
-z-index:2;
 text-align:center;
 font-size:72px;
 font-weight:900;
 letter-spacing:6px;
-margin:40px 0 0;
+margin:40px 0 10px;
 }
 
-/* BRAND（亮度恢复）*/
+/* BRAND */
 .brand{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(0.815);
-width:100%;
-height:auto;
-min-width:100%;
-min-height:100%;
+display:block;
+margin:0 auto 40px;
+width:320px;
+height:180px;
 object-fit:cover;
-z-index:1;
-opacity:0.25;
-pointer-events:none;
-
-/* ✅ 这里改了 */
-filter:none;
 }
 
 /* AVATAR */
@@ -58,7 +62,10 @@ filter:grayscale(100%);
 .avatar:hover{filter:none}
 
 /* PAGE */
-.page{display:none;padding:0 10% 100px;}
+.page{
+display:none;
+padding:0 10% 100px;
+}
 .page.active{display:block}
 
 /* ABOUT */
@@ -68,13 +75,16 @@ grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
 
+/* ROLE */
 .role{
 color:red;
 font-weight:bold;
 font-size:18px;
+line-height:2;
+word-break:keep-all;
 }
-.role div{margin-bottom:22px;}
 
+/* TEXT */
 .text{
 color:#ccc;
 line-height:1.8;
@@ -88,7 +98,7 @@ grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
 }
 
-/* FEATURED */
+/* ===== FEATURED 瀑布流 ===== */
 .masonry{
 column-count:2;
 column-gap:30px;
@@ -96,11 +106,9 @@ column-gap:30px;
 @media(max-width:900px){
 .masonry{column-count:1;}
 }
-
 .masonry-item{
 break-inside:avoid;
 margin-bottom:30px;
-transition:transform 0.12s ease-out;
 }
 
 /* CARD */
@@ -112,11 +120,14 @@ border:1px solid #333;
 cursor:pointer;
 overflow:hidden;
 }
-.card video,.card img{
+
+.card video,
+.card img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
+
 .card span{
 position:absolute;
 top:50%;
@@ -127,9 +138,12 @@ color:#aaa;
 .card:hover span{opacity:0}
 .card:hover{border-color:red}
 
-.info{margin-top:8px;font-size:14px;color:#aaa;}
-
-#workPage video{width:100%;cursor:pointer;}
+/* INFO */
+.info{
+margin-top:8px;
+font-size:14px;
+color:#aaa;
+}
 
 /* OVERLAY */
 .overlay{
@@ -142,12 +156,12 @@ height:100%;
 background:#000;
 z-index:999;
 }
+.overlay video,
 .overlay img{
 width:100%;
 height:100%;
 object-fit:contain;
 }
-
 .close{
 position:absolute;
 top:20px;
@@ -164,7 +178,7 @@ cursor:pointer;
 <!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
-<a onclick="showPage('featured',this)">Featured Project</a>
+<a onclick="showPage('featured',this)">Featured</a>
 <a onclick="showPage('video',this)">Video</a>
 <a onclick="showPage('visual',this)">Visual</a>
 <a onclick="showPage('cgi',this)">CGI</a>
@@ -174,47 +188,156 @@ cursor:pointer;
 <a onclick="showPage('contact',this)">Contact</a>
 </div>
 
-<!-- HERO -->
-<div class="hero">
 <h1 class="main-title">JAM MO</h1>
 
-<video class="brand"
-src="brand.mp4"
-autoplay
-muted
-loop
-playsinline
-webkit-playsinline
-preload="auto">
-</video>
-</div>
+<video class="brand" src="brand.mp4" autoplay muted loop></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
+
 <img src="images/avatar.jpg" class="avatar">
 
 <div class="about">
 
 <div class="role">
-<div>MULTIDISCIPLINARY ARTIST</div>
-<div>AUDIO-VISUAL ARTIST</div>
-<div>3D ARTIST</div>
-<div>MULTIMEDIA DIRECTOR</div>
-<div>INTERACTIVE DEVELOPER</div>
+MULTIDISCIPLINARY ARTIST<br>
+AUDIO-VISUAL ARTIST<br>
+3D ARTIST<br>
+MULTIMEDIA DIRECTOR<br>
+INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，通过跨学科与跨文化实践探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。作品实践主要呈现在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
+Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音艺术与交互系统的融合。
 </div>
 
 </div>
 </div>
 
-<!-- 其余结构保持不变（featured / video / visual / cgi / installation / sound / lab / contact / JS 全部原样） -->
+<!-- JS TEMPLATE -->
+<script>
+function createVideoCard(src,cover,title){
+return `
+<div>
+<div class="card"
+onclick="openVideo('${src}')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<video src="${src}" poster="${cover}" muted loop></video>
+<span>${title}</span>
+</div>
+<div class="info">${title}</div>
+</div>`
+}
+
+function createImageCard(src,title){
+return `
+<div>
+<div class="card" onclick="openImage('${src}')">
+<img src="${src}">
+<span>${title}</span>
+</div>
+<div class="info">${title}</div>
+</div>`
+}
+
+/* 自动生成 */
+function loadWorks(){
+
+let featured='',video='',cgi='',installation='',sound='',lab=''
+
+for(let i=1;i<=10;i++){
+
+let n=String(i).padStart(3,'0')
+
+featured+=`<div class="masonry-item">`+
+createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
++`</div>`
+
+video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
+cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
+installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
+sound+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
+lab+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
+}
+
+document.getElementById('featuredGrid').innerHTML=featured
+document.getElementById('videoGrid').innerHTML=video
+document.getElementById('cgiGrid').innerHTML=cgi
+document.getElementById('installationGrid').innerHTML=installation
+document.getElementById('soundGrid').innerHTML=sound
+document.getElementById('labGrid').innerHTML=lab
+
+/* VISUAL */
+let visual=''
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
+}
+document.getElementById('visualGrid').innerHTML=visual
+}
+
+window.onload=loadWorks
+</script>
+
+<!-- PAGES -->
+<div id="featured" class="page">
+<div class="masonry" id="featuredGrid"></div>
+</div>
+
+<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
+<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
+<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
+<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
+<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
+<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+
+<div id="contact" class="page">
+<p>Email: jam.mo.404lab@gmail.com</p>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay">
+<div class="close" onclick="closeOverlay()">CLOSE</div>
+<video id="overlayVideo" controls autoplay></video>
+<img id="overlayImg" style="display:none;">
+</div>
+
+<script>
+function showPage(id,el){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
+el.classList.add('active')
+}
+
+function openVideo(src){
+let v=document.getElementById('overlayVideo')
+let i=document.getElementById('overlayImg')
+i.style.display='none'
+v.style.display='block'
+v.src=src
+document.getElementById('overlay').style.display='block'
+}
+
+function openImage(src){
+let v=document.getElementById('overlayVideo')
+let i=document.getElementById('overlayImg')
+v.style.display='none'
+i.style.display='block'
+i.src=src
+document.getElementById('overlay').style.display='block'
+}
+
+function closeOverlay(){
+document.getElementById('overlay').style.display='none'
+document.getElementById('overlayVideo').pause()
+}
+</script>
 
 </body>
 </html>
