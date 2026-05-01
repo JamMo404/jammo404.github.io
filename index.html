@@ -71,6 +71,13 @@ padding:0 10% 100px;
 display:block;
 }
 
+/* ABOUT */
+.about{
+display:grid;
+grid-template-columns:1fr 2fr 2fr;
+gap:40px;
+}
+
 /* GRID */
 .grid{
 display:grid;
@@ -93,7 +100,6 @@ cursor:pointer;
 width:100%;
 height:100%;
 object-fit:cover;
-transition:.3s;
 }
 
 /* 文本 */
@@ -114,7 +120,7 @@ opacity:0;
 border-color:red;
 }
 
-/* 全屏 */
+/* overlay */
 .overlay{
 display:none;
 position:fixed;
@@ -157,34 +163,64 @@ color:#aaa;
 <a onclick="showPage('about', this)" class="active">About</a>
 <a onclick="showPage('featured', this)">FeaturedProject</a>
 <a onclick="showPage('video', this)">Video</a>
+<a onclick="showPage('visual', this)">Visual</a>
+<a onclick="showPage('cgi', this)">CGI</a>
+<a onclick="showPage('installation', this)">Installation</a>
+<a onclick="showPage('sound', this)">Sound</a>
+<a onclick="showPage('lab', this)">Lab</a>
+<a onclick="showPage('contact', this)">Contact</a>
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
 <img src="images/avatar.jpg" class="avatar">
 
 <!-- ABOUT -->
 <div id="about" class="page active">
-<p style="max-width:700px;margin:auto;color:#ccc;line-height:1.8;">
-Multidisciplinary Artist working across CGI, realtime visuals, sound and interactive installation.
+<div class="about">
+
+<div>
+<h3>Role</h3>
+<p style="color:red;">
+Multidisciplinary Artist<br>
+Audio-Visual Artist<br>
+3D Artist<br>
+Multimedia Director<br>
+Interactive Developer
 </p>
 </div>
+
+<div>
+<h3>About</h3>
+<p style="color:#ccc;">
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
+His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
+</p>
+</div>
+
+<div>
+<h3>关于</h3>
+<p style="color:#ccc;">
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。
+作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
+</p>
+</div>
+
+</div>
+</div>
+
+<!-- ===== 卡片模板复用 ===== -->
 
 <!-- FEATURED -->
 <div id="featured" class="page">
 <h2>FeaturedProject</h2>
-
 <div class="grid">
 
-<!-- card 1 -->
 <div class="card"
 onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')"
 onmouseenter="let v=this.querySelector('video'); v.play()"
 onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
-
 <video src="video1.mp4" poster="images/cover1.jpg" muted loop playsinline></video>
 <span>Project 01</span>
-
 </div>
 
 </div>
@@ -193,39 +229,76 @@ onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
 <!-- VIDEO -->
 <div id="video" class="page">
 <h2>Video</h2>
-
 <div class="grid">
 
-<!-- video1 -->
 <div class="card"
 onclick="openProject('video1.mp4','Video 01','Realtime Visual','Sound Design')"
 onmouseenter="let v=this.querySelector('video'); v.play()"
 onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
-
 <video src="video1.mp4" poster="images/cover1.jpg" muted loop playsinline></video>
 <span>Video 01</span>
-
 </div>
 
-<!-- ✅ video2（你缺的就是这个） -->
 <div class="card"
-onclick="openProject('video2.mp4','Video 02','Experiment','Audio + Visual')"
+onclick="openProject('video2.mp4','Video 02','Experiment','AV')"
 onmouseenter="let v=this.querySelector('video'); v.play()"
 onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
-
 <video src="video2.mp4" poster="images/cover2.jpg" muted loop playsinline></video>
 <span>Video 02</span>
-
 </div>
 
 </div>
+</div>
+
+<!-- VISUAL -->
+<div id="visual" class="page">
+<h2>Visual</h2>
+<div class="grid">
+<div class="card"><span>Visual Project</span></div>
+</div>
+</div>
+
+<!-- CGI -->
+<div id="cgi" class="page">
+<h2>CGI</h2>
+<div class="grid">
+<div class="card"><span>CGI Work</span></div>
+</div>
+</div>
+
+<!-- INSTALLATION -->
+<div id="installation" class="page">
+<h2>Installation</h2>
+<div class="grid">
+<div class="card"><span>Installation Work</span></div>
+</div>
+</div>
+
+<!-- SOUND -->
+<div id="sound" class="page">
+<h2>Sound</h2>
+<div class="grid">
+<div class="card"><span>Sound Project</span></div>
+</div>
+</div>
+
+<!-- LAB -->
+<div id="lab" class="page">
+<h2>Lab</h2>
+<div class="grid">
+<div class="card"><span>Experiment</span></div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+<h2>Contact</h2>
+<p>Email: jam.mo.404lab@gmail.com</p>
 </div>
 
 <!-- OVERLAY -->
 <div id="overlay" class="overlay">
-
 <div class="close" onclick="closeProject()">CLOSE</div>
-
 <video id="overlayVideo" controls autoplay></video>
 
 <div class="overlay-info">
@@ -233,7 +306,6 @@ onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
 <p id="desc"></p>
 <p id="credits"></p>
 </div>
-
 </div>
 
 <script>
