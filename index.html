@@ -17,24 +17,28 @@ font-family:Arial, Helvetica, sans-serif;
 display:flex;
 justify-content:center;
 gap:30px;
-padding:25px;
+padding:25px 10px;
 flex-wrap:wrap;
 }
+
 .nav a{
 color:#888;
-cursor:pointer;
 text-decoration:none;
 font-weight:bold;
+cursor:pointer;
 }
+
 .nav a.active,
-.nav a:hover{color:red;}
+.nav a:hover{
+color:red;
+}
 
 /* TITLE */
 .main-title{
 text-align:center;
-font-size:72px;
+font-size:64px;
 font-weight:900;
-letter-spacing:6px;
+letter-spacing:4px;
 margin:30px 0 10px;
 }
 
@@ -45,12 +49,13 @@ margin:0 auto 40px;
 width:320px;
 height:180px;
 object-fit:cover;
+border:none;
 }
 
 /* AVATAR */
 .avatar{
 display:block;
-margin:40px auto;
+margin:40px auto 60px;
 width:140px;
 height:140px;
 border-radius:50%;
@@ -60,7 +65,7 @@ filter:grayscale(100%);
 .avatar:hover{filter:none}
 
 /* PAGE */
-.page{display:none;padding:0 8% 100px;}
+.page{display:none;padding:0 10% 100px;}
 .page.active{display:block}
 
 /* ABOUT */
@@ -69,10 +74,21 @@ display:grid;
 grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
+@media(max-width:800px){
+.about{grid-template-columns:1fr}
+}
+
+.role{
+color:red;
+font-weight:bold;
+line-height:2;
+white-space:nowrap;
+}
+
 .typewriter{
-font-family:"Courier New";
-line-height:1.8;
+font-family:monospace;
 color:#ccc;
+line-height:1.8;
 }
 
 /* GRID */
@@ -85,13 +101,12 @@ gap:25px;
 /* CARD */
 .card{
 position:relative;
-height:180px;
+height:200px;
 background:#111;
-border:1px solid #333;
-cursor:pointer;
 overflow:hidden;
+cursor:pointer;
+border:1px solid #333;
 }
-.card:hover{border-color:red}
 
 .card video,
 .card img{
@@ -104,35 +119,37 @@ object-fit:cover;
 position:absolute;
 bottom:10px;
 left:10px;
-font-size:12px;
+font-size:14px;
 color:#aaa;
 }
+
+.card:hover{border-color:red}
 
 /* OVERLAY */
 .overlay{
 display:none;
 position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
+top:0;left:0;
+width:100%;height:100%;
 background:#000;
 z-index:999;
 }
+
 .overlay video,
 .overlay img{
 width:100%;
 height:100%;
 object-fit:contain;
 }
+
 .close{
 position:absolute;
-top:20px;
-right:30px;
-cursor:pointer;
+top:30px;
+right:40px;
 color:#aaa;
+cursor:pointer;
 }
-.close:hover{color:red;}
+.close:hover{color:red}
 </style>
 </head>
 
@@ -148,26 +165,25 @@ color:#aaa;
 <a onclick="showPage('installation',this)">Installation</a>
 <a onclick="showPage('sound',this)">Sound</a>
 <a onclick="showPage('lab',this)">Lab</a>
+<a onclick="showPage('contact',this)">Contact</a>
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-<video class="brand" src="brand.mp4" autoplay muted loop></video>
+
+<video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
-
 <img src="images/avatar.jpg" class="avatar">
 
 <div class="about">
 
-<div>
-<p style="color:red;white-space:nowrap;">
+<div class="role">
 MULTIDISCIPLINARY ARTIST<br>
 AUDIO-VISUAL ARTIST<br>
 3D ARTIST<br>
 MULTIMEDIA DIRECTOR<br>
 INTERACTIVE DEVELOPER
-</p>
 </div>
 
 <div class="typewriter">
@@ -183,156 +199,134 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 </div>
 
-<!-- PAGES -->
-<div id="featured" class="page"><div class="grid" id="featuredGrid"></div></div>
-<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
-<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
-<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
-<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
-<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
-<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+<!-- 所有分类 -->
+<div id="featured" class="page"><h2>Featured</h2><div class="grid"></div></div>
+<div id="video" class="page"><h2>Video</h2><div class="grid"></div></div>
+<div id="visual" class="page">
+<h2>Visual</h2>
+<div class="grid">
+<div class="card" onclick="openImage('images/visual001.jpg')">
+<img src="images/visual001.jpg">
+<span>visual001</span>
+</div>
+<div class="card" onclick="openImage('images/visual002.jpg')">
+<img src="images/visual002.jpg">
+<span>visual002</span>
+</div>
+</div>
+</div>
 
-<!-- OVERLAY -->
+<div id="cgi" class="page"><h2>CGI</h2><div class="grid"></div></div>
+<div id="installation" class="page"><h2>Installation</h2><div class="grid"></div></div>
+<div id="sound" class="page"><h2>Sound</h2><div class="grid"></div></div>
+<div id="lab" class="page"><h2>Lab</h2><div class="grid"></div></div>
+<div id="contact" class="page"><h2>Contact</h2><p>Email: jam.mo.404lab@gmail.com</p></div>
+
+<!-- overlay -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeOverlay()">CLOSE</div>
-<div id="viewer"></div>
+<video id="overlayVideo" controls></video>
+<img id="overlayImage">
 </div>
 
 <script>
 
+/* 切页 */
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
+
 document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
-function openVideo(src){
-document.getElementById('overlay').style.display='block'
-document.getElementById('viewer').innerHTML =
-`<video src="${src}" controls autoplay></video>`
+/* 分类规则 */
+function getCategory(name){
+name = name.toLowerCase()
+if(name.startsWith("featured")) return "featured"
+if(name.startsWith("video")) return "video"
+if(name.startsWith("cgi")) return "cgi"
+if(name.startsWith("installation")) return "installation"
+if(name.startsWith("sound")) return "sound"
+if(name.startsWith("lab")) return "lab"
+return null
 }
 
-function openImage(src){
-document.getElementById('overlay').style.display='block'
-document.getElementById('viewer').innerHTML =
-`<img src="${src}">`
-}
+/* 自动读取 GitHub */
+fetch("https://api.github.com/repos/JamMo404/jammo404.github.io/contents/videoall")
+.then(res=>res.json())
+.then(files=>{
 
-function closeOverlay(){
-document.getElementById('overlay').style.display='none'
-}
+files.forEach(file=>{
 
-/* ===== 自动读取 ===== */
+let name = file.name
+let category = getCategory(name)
+if(!category) return
 
-const repo = "jammo404/jammo404.github.io"
-
-const grids = {
-featured: document.getElementById("featuredGrid"),
-video: document.getElementById("videoGrid"),
-cgi: document.getElementById("cgiGrid"),
-installation: document.getElementById("installationGrid"),
-sound: document.getElementById("soundGrid"),
-lab: document.getElementById("labGrid")
-}
-
-const counters = {
-featured:1,video:1,cgi:1,installation:1,sound:1,lab:1
-}
-
-async function loadVideos(){
-
-try{
-let res = await fetch(`https://api.github.com/repos/${repo}/contents/videoall`)
-if(!res.ok) return
-
-let files = await res.json()
-
-files.forEach(f=>{
-
-if(!f.name.endsWith(".mp4")) return
-
-let name = f.name.toLowerCase()
-let type = null
-
-if(name.startsWith("featured")) type="featured"
-else if(name.startsWith("video")) type="video"
-else if(name.startsWith("cgi")) type="cgi"
-else if(name.startsWith("installation")) type="installation"
-else if(name.startsWith("sound")) type="sound"
-else if(name.startsWith("lab")) type="lab"
-
-if(!type) return
-
-let id = String(counters[type]).padStart(3,'0')
-counters[type]++
+let grid = document.querySelector(`#${category} .grid`)
+if(!grid) return
 
 let card = document.createElement("div")
-card.className="card"
+card.className = "card"
 
 card.innerHTML = `
-<video src="${f.download_url}" muted loop></video>
-<span>${type}${id}</span>
+<video src="videoall/${name}" muted loop playsinline></video>
+<span>${name.replace(".mp4","")}</span>
 `
 
-card.onmouseenter=()=>card.querySelector("video").play()
-card.onmouseleave=()=>{
-let v=card.querySelector("video")
+card.onclick = ()=>{
+openVideo(`videoall/${name}`)
+}
+
+card.onmouseenter = ()=>{
+let v = card.querySelector("video")
+v.play()
+}
+
+card.onmouseleave = ()=>{
+let v = card.querySelector("video")
 v.pause()
 v.currentTime=0
 }
 
-card.onclick=()=>openVideo(f.download_url)
-
-grids[type].appendChild(card)
+grid.appendChild(card)
 
 })
 
-}catch(e){
-console.log(e)
-}
-
-}
-
-/* 图片 */
-async function loadImages(){
-
-try{
-let res = await fetch(`https://api.github.com/repos/${repo}/contents/images`)
-if(!res.ok) return
-
-let files = await res.json()
-
-let i=1
-
-files.forEach(f=>{
-if(!f.name.match(/\.(jpg|png|jpeg)/)) return
-
-let id = String(i).padStart(3,'0')
-i++
-
-let card = document.createElement("div")
-card.className="card"
-
-card.innerHTML = `
-<img src="${f.download_url}">
-<span>visual${id}</span>
-`
-
-card.onclick=()=>openImage(f.download_url)
-
-document.getElementById("visualGrid").appendChild(card)
-
 })
 
-}catch(e){
-console.log(e)
+/* 打开视频 */
+function openVideo(src){
+let overlay = document.getElementById("overlay")
+let v = document.getElementById("overlayVideo")
+let img = document.getElementById("overlayImage")
+
+overlay.style.display="block"
+v.style.display="block"
+img.style.display="none"
+
+v.src = src
+v.play()
 }
 
+/* 打开图片 */
+function openImage(src){
+let overlay = document.getElementById("overlay")
+let v = document.getElementById("overlayVideo")
+let img = document.getElementById("overlayImage")
+
+overlay.style.display="block"
+v.style.display="none"
+img.style.display="block"
+
+img.src = src
 }
 
-loadVideos()
-loadImages()
+/* 关闭 */
+function closeOverlay(){
+document.getElementById("overlay").style.display="none"
+document.getElementById("overlayVideo").pause()
+}
 
 </script>
 
