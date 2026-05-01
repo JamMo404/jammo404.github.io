@@ -26,12 +26,12 @@ letter-spacing:6px;
 margin:40px 0 0;
 }
 
-/* BRAND（你当前版本 scale=0.83 保持）*/
+/* BRAND（再缩小一倍）*/
 .brand{
 position:absolute;
 top:50%;
 left:50%;
-transform:translate(-50%,-50%) scale(0.5);
+transform:translate(-50%,-50%) scale(0.615); /* ✅ 关键修改 */
 width:100%;
 height:auto;
 min-width:100%;
@@ -162,7 +162,7 @@ cursor:pointer;
 <!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
-<a onclick="showPage('featured',this)">Featured</a>
+<a onclick="showPage('featured',this)">Featured Project</a>
 <a onclick="showPage('video',this)">Video</a>
 <a onclick="showPage('visual',this)">Visual</a>
 <a onclick="showPage('cgi',this)">CGI</a>
@@ -246,7 +246,7 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 
 <script>
 
-/* ✅ 恢复的交互函数 */
+/* Featured 交互 */
 function enableLiquidEffect(){
 const container = document.getElementById("featuredGrid")
 if(!container) return
@@ -267,7 +267,6 @@ const maxDist = 300
 
 if(dist < maxDist){
 let force = (maxDist - dist)/maxDist
-
 let moveX = -dx * force * 0.25
 let moveY = -dy * force * 0.25
 let scale = 1 + force * 0.35
@@ -281,6 +280,7 @@ item.style.transform="translate(0,0) scale(1)"
 })
 }
 
+/* 自动生成 */
 function createVideoCard(src,cover,title){
 return `<div>
 <div class="card"
@@ -332,6 +332,7 @@ visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
 document.getElementById('visualGrid').innerHTML=visual
 }
 
+/* 页面切换 */
 function showPage(id,el){
 location.hash=id
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
@@ -351,11 +352,21 @@ document.getElementById(id).classList.add('active')
 
 window.addEventListener("hashchange",loadFromHash)
 
-/* ✅ 关键：这里恢复调用 */
+/* 启动 */
 window.onload=function(){
 loadWorks()
-enableLiquidEffect()   // 🔥 恢复
+enableLiquidEffect()
 loadFromHash()
+
+/* 🔥 手机自动播放修复 */
+const brand = document.querySelector('.brand')
+if(brand){
+brand.play().catch(()=>{})
+}
+
+document.addEventListener("touchstart",()=>{
+if(brand) brand.play()
+},{once:true})
 }
 </script>
 
