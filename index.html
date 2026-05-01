@@ -27,9 +27,7 @@ font-weight:bold;
 cursor:pointer;
 }
 .nav a.active,
-.nav a:hover{
-color:red;
-}
+.nav a:hover{color:red}
 
 /* TITLE */
 .main-title{
@@ -62,10 +60,7 @@ filter:grayscale(100%);
 .avatar:hover{filter:none}
 
 /* PAGE */
-.page{
-display:none;
-padding:0 10% 100px;
-}
+.page{display:none;padding:0 10% 100px;}
 .page.active{display:block}
 
 /* ABOUT */
@@ -74,8 +69,6 @@ display:grid;
 grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
-
-/* ROLE */
 .role{
 color:red;
 font-weight:bold;
@@ -83,8 +76,6 @@ font-size:18px;
 line-height:2;
 word-break:keep-all;
 }
-
-/* TEXT */
 .text{
 color:#ccc;
 line-height:1.8;
@@ -98,7 +89,7 @@ grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
 }
 
-/* ===== FEATURED 瀑布流 ===== */
+/* FEATURED 瀑布 */
 .masonry{
 column-count:2;
 column-gap:30px;
@@ -120,14 +111,12 @@ border:1px solid #333;
 cursor:pointer;
 overflow:hidden;
 }
-
 .card video,
 .card img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
-
 .card span{
 position:absolute;
 top:50%;
@@ -145,7 +134,13 @@ font-size:14px;
 color:#aaa;
 }
 
-/* OVERLAY */
+/* WORK PAGE */
+#workPage video{
+width:100%;
+cursor:pointer;
+}
+
+/* OVERLAY（只给图片用） */
 .overlay{
 display:none;
 position:fixed;
@@ -156,7 +151,6 @@ height:100%;
 background:#000;
 z-index:999;
 }
-.overlay video,
 .overlay img{
 width:100%;
 height:100%;
@@ -189,7 +183,6 @@ cursor:pointer;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
 <video class="brand" src="brand.mp4" autoplay muted loop></video>
 
 <!-- ABOUT -->
@@ -208,23 +201,60 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音艺术与交互系统的融合。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，通过跨学科与跨文化实践探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。作品实践主要呈现在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
 </div>
 
 </div>
 </div>
 
-<!-- JS TEMPLATE -->
+<!-- FEATURED -->
+<div id="featured" class="page">
+<div class="masonry" id="featuredGrid"></div>
+</div>
+
+<!-- 其它类目 -->
+<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
+<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
+<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
+<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
+<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
+<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+
+<div id="contact" class="page">
+<p>Email: jam.mo.404lab@gmail.com</p>
+</div>
+
+<!-- 作品详情页 -->
+<div id="workPage" class="page">
+
+<div style="max-width:900px;margin:auto;padding-top:40px;">
+
+<h2 id="workTitle"></h2>
+
+<p id="workDesc" style="color:#aaa;"></p>
+
+<video id="workVideo" controls></video>
+
+</div>
+
+</div>
+
+<!-- 图片 overlay -->
+<div id="overlay" class="overlay">
+<div class="close" onclick="closeOverlay()">CLOSE</div>
+<img id="overlayImg">
+</div>
+
 <script>
 function createVideoCard(src,cover,title){
 return `
 <div>
 <div class="card"
-onclick="openVideo('${src}')"
+onclick="openWork('${src}','${title}')"
 onmouseenter="this.querySelector('video').play()"
 onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
 <video src="${src}" poster="${cover}" muted loop></video>
@@ -272,7 +302,6 @@ document.getElementById('installationGrid').innerHTML=installation
 document.getElementById('soundGrid').innerHTML=sound
 document.getElementById('labGrid').innerHTML=lab
 
-/* VISUAL */
 let visual=''
 for(let i=1;i<=10;i++){
 let n=String(i).padStart(3,'0')
@@ -281,33 +310,30 @@ visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
 document.getElementById('visualGrid').innerHTML=visual
 }
 
-window.onload=loadWorks
-</script>
+function openWork(src,title){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById('workPage').classList.add('active')
 
-<!-- PAGES -->
-<div id="featured" class="page">
-<div class="masonry" id="featuredGrid"></div>
-</div>
+document.getElementById('workVideo').src=src
+document.getElementById('workTitle').innerText=title
+document.getElementById('workDesc').innerText="Project description..."
+}
 
-<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
-<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
-<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
-<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
-<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
-<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+/* 点击视频全屏 */
+document.addEventListener("click",function(e){
+if(e.target.id==="workVideo"){
+e.target.requestFullscreen()
+}
+})
 
-<div id="contact" class="page">
-<p>Email: jam.mo.404lab@gmail.com</p>
-</div>
+function openImage(src){
+document.getElementById('overlay').style.display='block'
+document.getElementById('overlayImg').src=src
+}
+function closeOverlay(){
+document.getElementById('overlay').style.display='none'
+}
 
-<!-- OVERLAY -->
-<div id="overlay" class="overlay">
-<div class="close" onclick="closeOverlay()">CLOSE</div>
-<video id="overlayVideo" controls autoplay></video>
-<img id="overlayImg" style="display:none;">
-</div>
-
-<script>
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
@@ -315,28 +341,7 @@ document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
-function openVideo(src){
-let v=document.getElementById('overlayVideo')
-let i=document.getElementById('overlayImg')
-i.style.display='none'
-v.style.display='block'
-v.src=src
-document.getElementById('overlay').style.display='block'
-}
-
-function openImage(src){
-let v=document.getElementById('overlayVideo')
-let i=document.getElementById('overlayImg')
-v.style.display='none'
-i.style.display='block'
-i.src=src
-document.getElementById('overlay').style.display='block'
-}
-
-function closeOverlay(){
-document.getElementById('overlay').style.display='none'
-document.getElementById('overlayVideo').pause()
-}
+window.onload=loadWorks
 </script>
 
 </body>
