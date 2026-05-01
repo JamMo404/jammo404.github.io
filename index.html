@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>jammo</title>
+
+<style>
+body{
+margin:0;
+background:#000;
+color:#fff;
+font-family:Arial;
+}
+
+/* NAV */
+.nav{
+display:flex;
+justify-content:center;
+gap:40px;
+padding:30px 0;
+flex-wrap:wrap;
+}
+
+.nav a{
+color:#aaa;
+text-decoration:none;
+font-weight:bold;
+cursor:pointer;
+transition:.3s;
+}
+
+.nav a:hover,
+.nav a.active{
+color:red;
+}
+
+/* 标题 */
+.main-title{
+text-align:center;
+font-family:Futura,Arial;
+font-size:64px;
+margin:40px 0 80px;
+}
+
+/* 页面 */
+.page{
+display:none;
+opacity:0;
+padding:0 10% 100px;
+transition:0.3s;
+}
+
+.page.active{
+display:block;
+opacity:1;
+}
+
+/* ABOUT */
+.about{
+display:grid;
+grid-template-columns:1fr 2fr 2fr;
+gap:40px;
+}
+
+.role-all{
+font-family:Futura,Arial;
+font-size:22px;
+color:red;
+line-height:2.2;
+}
+
+.typewriter{
+font-family:"Courier New",monospace;
+color:#ddd;
+line-height:1.8;
+}
+
+/* GRID */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+gap:30px;
+}
+
+/* 卡片 */
+.card{
+position:relative;
+height:200px;
+background:#111;
+border:1px solid #333;
+overflow:hidden;
+cursor:pointer;
+}
+
+/* 视频 */
+.card video{
+width:100%;
+height:100%;
+object-fit:cover;
+opacity:0;
+transition:0.3s;
+}
+
+/* hover */
+.card:hover video{
+opacity:1;
+}
+
+/* 文本 */
+.card span{
+position:absolute;
+color:#666;
+left:50%;
+top:50%;
+transform:translate(-50%,-50%);
+transition:.3s;
+}
+
+.card:hover span{
+opacity:0;
+}
+
+.card:hover{
+border-color:red;
+}
+
+/* ===== 全屏作品页 ===== */
+.overlay{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#000;
+z-index:999;
+}
+
+.overlay video{
+width:100%;
+height:100%;
+object-fit:contain;
+}
+
+.overlay-info{
+position:absolute;
+bottom:40px;
+left:40px;
+max-width:500px;
+}
+
+.close{
+position:absolute;
+top:30px;
+right:40px;
+cursor:pointer;
+color:#aaa;
+}
+.close:hover{color:red;}
+</style>
+</head>
+
+<body>
+
+<!-- NAV -->
+<div class="nav">
+<a onclick="showPage('about', this)" class="active">About</a>
+<a onclick="showPage('featured', this)">FeaturedProject</a>
+<a onclick="showPage('video', this)">Video</a>
+<a onclick="showPage('visual', this)">Visual</a>
+<a onclick="showPage('cgi', this)">CGI</a>
+<a onclick="showPage('installation', this)">Installation</a>
+<a onclick="showPage('sound', this)">Sound</a>
+<a onclick="showPage('lab', this)">Lab</a>
+<a onclick="showPage('contact', this)">Contact</a>
+</div>
+
+<h1 class="main-title">JAM MO</h1>
+
+<!-- ABOUT -->
+<div id="about" class="page active">
+<div class="about">
+
+<div>
+<h3>Role</h3>
+<p class="role-all">
+Mutidisciplinary Artist<br>
+Audio-Visual Artist<br>
+3D Artist<br>
+Multimedia Director<br>
+Interactive Developer
+</p>
+</div>
+
+<div>
+<h3>About</h3>
+<p class="typewriter">
+Jam Mo is a multidisciplinary artist whose practice focuses on CGI animation, programmable real-time visuals, sound art, and interactive installations...
+</p>
+</div>
+
+<div>
+<h3>关于</h3>
+<p class="typewriter">
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合...
+</p>
+</div>
+
+</div>
+</div>
+
+<!-- ===== 各类目页面 ===== -->
+
+<!-- FEATURED -->
+<div id="featured" class="page">
+<h2>FeaturedProject</h2>
+<div class="grid">
+
+<div class="card"
+onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="this.querySelector('video').pause()">
+<video src="video1.mp4" muted loop></video>
+<span>Project 01</span>
+</div>
+
+</div>
+</div>
+
+<!-- VIDEO -->
+<div id="video" class="page">
+<h2>Video</h2>
+<div class="grid">
+
+<div class="card"
+onclick="openProject('video2.mp4','Video Work','Realtime Visual','Sound Design')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="this.querySelector('video').pause()">
+<video src="video2.mp4" muted loop></video>
+<span>Video</span>
+</div>
+
+</div>
+</div>
+
+<!-- VISUAL -->
+<div id="visual" class="page">
+<h2>Visual</h2>
+<div class="grid">
+<div class="card"><span>Visual Project</span></div>
+</div>
+</div>
+
+<!-- CGI -->
+<div id="cgi" class="page">
+<h2>CGI</h2>
+<div class="grid">
+<div class="card"><span>CGI Work</span></div>
+</div>
+</div>
+
+<!-- INSTALLATION -->
+<div id="installation" class="page">
+<h2>Installation</h2>
+<div class="grid">
+<div class="card"><span>Installation</span></div>
+</div>
+</div>
+
+<!-- SOUND -->
+<div id="sound" class="page">
+<h2>Sound</h2>
+<div class="grid">
+<div class="card"><span>Sound Project</span></div>
+</div>
+</div>
+
+<!-- LAB -->
+<div id="lab" class="page">
+<h2>Lab</h2>
+<div class="grid">
+<div class="card"><span>Experiment</span></div>
+</div>
+</div>
+
+<!-- CONTACT -->
+<div id="contact" class="page">
+<h2>Contact</h2>
+<p>Email: jam.mo.404lab@gmail.com</p>
+</div>
+
+<!-- ===== 全屏层 ===== -->
+<div id="overlay" class="overlay">
+
+<div class="close" onclick="closeProject()">CLOSE</div>
+
+<video id="overlayVideo" controls autoplay></video>
+
+<div class="overlay-info">
+<h2 id="title"></h2>
+<p id="desc"></p>
+<p id="credits"></p>
+</div>
+
+</div>
+
+<script>
+function showPage(id, el){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
+el.classList.add('active')
+}
+
+function openProject(video,title,desc,credits){
+document.getElementById('overlay').style.display='block'
+
+let v = document.getElementById('overlayVideo')
+v.src = video
+v.play()
+
+document.getElementById('title').innerText = title
+document.getElementById('desc').innerText = desc
+document.getElementById('credits').innerText = credits
+}
+
+function closeProject(){
+document.getElementById('overlay').style.display='none'
+document.getElementById('overlayVideo').pause()
+}
+</script>
+
+</body>
+</html>
