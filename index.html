@@ -16,27 +16,23 @@ font-family:Arial;
 .nav{
 display:flex;
 justify-content:center;
-gap:40px;
+gap:30px;
 padding:30px 0;
 flex-wrap:wrap;
 }
-
 .nav a{
 color:#aaa;
 text-decoration:none;
 font-weight:bold;
 cursor:pointer;
 }
-
 .nav a:hover,
-.nav a.active{
-color:red;
-}
+.nav a.active{color:red;}
 
 /* 标题 */
 .main-title{
 text-align:center;
-font-family:Helvetica, Arial, sans-serif;
+font-family:Helvetica, Arial;
 font-weight:900;
 font-size:80px;
 letter-spacing:4px;
@@ -60,11 +56,6 @@ width:140px;
 height:140px;
 border-radius:50%;
 border:2px solid #333;
-filter:grayscale(100%);
-}
-.avatar:hover{
-filter:none;
-border-color:red;
 }
 
 /* page */
@@ -77,14 +68,13 @@ display:grid;
 grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
-
 .typewriter{
 font-family:"Courier New", monospace;
 color:#ddd;
 line-height:1.8;
 }
 
-/* Role */
+/* role */
 .role-line{
 color:red;
 text-transform:uppercase;
@@ -92,9 +82,7 @@ display:flex;
 flex-wrap:wrap;
 gap:10px 20px;
 }
-.role-line span{
-white-space:nowrap;
-}
+.role-line span{white-space:nowrap;}
 
 /* GRID */
 .grid{
@@ -105,9 +93,7 @@ gap:30px;
 
 /* 卡片 */
 .card{
-display:block;
-text-decoration:none;
-color:#fff;
+cursor:pointer;
 }
 
 .media{
@@ -118,35 +104,37 @@ border:1px solid #333;
 overflow:hidden;
 }
 
-.media video,
+/* 视频 */
+.media video{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+/* 图片 */
 .media img{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* hover */
+/* hover 播放 */
+.card:hover .media video{
+opacity:1;
+}
+
 .card:hover .media{
 border-color:red;
 }
 
-/* 文本信息 */
+/* 文本 */
 .info{
 margin-top:10px;
 }
+.info h4{margin:0;}
+.info p{color:#aaa;font-size:14px;}
 
-.info h4{
-margin:0;
-font-size:16px;
-}
-
-.info p{
-margin:5px 0 0;
-color:#aaa;
-font-size:14px;
-}
-
-/* overlay（保留原功能） */
+/* overlay */
 .overlay{
 display:none;
 position:fixed;
@@ -164,6 +152,13 @@ height:100%;
 object-fit:contain;
 }
 
+.overlay-info{
+position:absolute;
+bottom:40px;
+left:40px;
+max-width:500px;
+}
+
 .close{
 position:absolute;
 top:30px;
@@ -179,23 +174,28 @@ color:#aaa;
 
 <!-- NAV -->
 <div class="nav">
-<a onclick="showPage('about', this)" class="active">About</a>
-<a onclick="showPage('featured', this)">FeaturedProject</a>
-<a onclick="showPage('video', this)">Video</a>
-<a onclick="showPage('visual', this)">Visual</a>
-<a onclick="showPage('contact', this)">Contact</a>
+<a onclick="showPage('about',this)" class="active">About</a>
+<a onclick="showPage('featured',this)">FeaturedProject</a>
+<a onclick="showPage('video',this)">Video</a>
+<a onclick="showPage('visual',this)">Visual</a>
+<a onclick="showPage('cgi',this)">CGI</a>
+<a onclick="showPage('installation',this)">Installation</a>
+<a onclick="showPage('sound',this)">Sound</a>
+<a onclick="showPage('lab',this)">Lab</a>
+<a onclick="showPage('contact',this)">Contact</a>
 </div>
 
 <h1 class="main-title">JAM MO</h1>
 
 <video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
 
-<!-- ABOUT -->
+<!-- ===== ABOUT ===== -->
 <div id="about" class="page active">
 
 <img src="images/avatar.jpg" class="avatar">
 
 <div class="about">
+
 <div>
 <h3>PRACTICE</h3>
 <p class="role-line">
@@ -210,25 +210,33 @@ color:#aaa;
 <div>
 <h3>ABOUT</h3>
 <p class="typewriter">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations...
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
+His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
 </p>
 </div>
 
 <div>
 <h3>关于</h3>
 <p class="typewriter">
-Jam Mo是一位多学科艺术创作者...
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。
+作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
 </p>
 </div>
+
 </div>
 </div>
+
+<!-- ===== 通用卡片函数模板 ===== -->
 
 <!-- FEATURED -->
 <div id="featured" class="page">
 <h2>FeaturedProject</h2>
 <div class="grid">
 
-<a href="https://yourlink.com/project1" target="_blank" class="card">
+<div class="card"
+onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')"
+onmouseenter="this.querySelector('video')?.play()"
+onmouseleave="let v=this.querySelector('video'); if(v){v.pause();v.currentTime=0;}">
 <div class="media">
 <video src="video1.mp4" muted loop playsinline></video>
 </div>
@@ -236,7 +244,7 @@ Jam Mo是一位多学科艺术创作者...
 <h4>Project 01</h4>
 <p>Featured audiovisual work</p>
 </div>
-</a>
+</div>
 
 </div>
 </div>
@@ -246,7 +254,10 @@ Jam Mo是一位多学科艺术创作者...
 <h2>Video</h2>
 <div class="grid">
 
-<a href="https://yourlink.com/video1" target="_blank" class="card">
+<div class="card"
+onclick="openProject('video1.mp4','Video 01','Realtime Visual','Sound Design')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
 <div class="media">
 <video src="video1.mp4" muted loop playsinline></video>
 </div>
@@ -254,9 +265,12 @@ Jam Mo是一位多学科艺术创作者...
 <h4>Video 01</h4>
 <p>Realtime visual performance</p>
 </div>
-</a>
+</div>
 
-<a href="https://yourlink.com/video2" target="_blank" class="card">
+<div class="card"
+onclick="openProject('video2.mp4','Video 02','Experiment','AV')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
 <div class="media">
 <video src="video2.mp4" muted loop playsinline></video>
 </div>
@@ -264,17 +278,17 @@ Jam Mo是一位多学科艺术创作者...
 <h4>Video 02</h4>
 <p>Experimental audiovisual</p>
 </div>
-</a>
+</div>
 
 </div>
 </div>
 
-<!-- VISUAL（图片） -->
+<!-- VISUAL -->
 <div id="visual" class="page">
 <h2>Visual</h2>
 <div class="grid">
 
-<a href="https://yourlink.com/visual1" target="_blank" class="card">
+<div class="card">
 <div class="media">
 <img src="images/visual1.jpg">
 </div>
@@ -282,10 +296,22 @@ Jam Mo是一位多学科艺术创作者...
 <h4>Visual Work</h4>
 <p>Static image exploration</p>
 </div>
-</a>
+</div>
 
 </div>
 </div>
+
+<!-- CGI -->
+<div id="cgi" class="page"><h2>CGI</h2><div class="grid"></div></div>
+
+<!-- INSTALLATION -->
+<div id="installation" class="page"><h2>Installation</h2><div class="grid"></div></div>
+
+<!-- SOUND -->
+<div id="sound" class="page"><h2>Sound</h2><div class="grid"></div></div>
+
+<!-- LAB -->
+<div id="lab" class="page"><h2>Lab</h2><div class="grid"></div></div>
 
 <!-- CONTACT -->
 <div id="contact" class="page">
@@ -293,13 +319,41 @@ Jam Mo是一位多学科艺术创作者...
 <p>Email: jam.mo.404lab@gmail.com</p>
 </div>
 
+<!-- overlay -->
+<div id="overlay" class="overlay">
+<div class="close" onclick="closeProject()">CLOSE</div>
+<video id="overlayVideo" controls autoplay></video>
+<div class="overlay-info">
+<h2 id="title"></h2>
+<p id="desc"></p>
+<p id="credits"></p>
+</div>
+</div>
+
 <script>
-function showPage(id, el){
+function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
 
 document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
+}
+
+function openProject(video,title,desc,credits){
+document.getElementById('overlay').style.display='block'
+
+let v=document.getElementById('overlayVideo')
+v.src=video
+v.play()
+
+document.getElementById('title').innerText=title
+document.getElementById('desc').innerText=desc
+document.getElementById('credits').innerText=credits
+}
+
+function closeProject(){
+document.getElementById('overlay').style.display='none'
+document.getElementById('overlayVideo').pause()
 }
 </script>
 
