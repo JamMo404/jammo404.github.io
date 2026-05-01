@@ -109,12 +109,8 @@ height:100%;
 object-fit:cover;
 }
 
-/* hover 播放 */
-.card:hover .media{
-border-color:red;
-}
+.card:hover .media{border-color:red;}
 
-/* 文本 */
 .info{margin-top:10px;}
 .info h4{margin:0;}
 .info p{color:#aaa;font-size:14px;}
@@ -131,7 +127,8 @@ background:#000;
 z-index:999;
 }
 
-.overlay video{
+.overlay video,
+.overlay img{
 width:100%;
 height:100%;
 object-fit:contain;
@@ -205,142 +202,43 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 </div>
 
-<!-- ===== FEATURED ===== -->
-<div id="featured" class="page">
-<h2>FeaturedProject</h2>
-<div class="grid">
-
-<div class="card" onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video1.mp4" muted loop></video></div>
-<div class="info"><h4>Project 01</h4><p>Featured audiovisual</p></div>
-</div>
-
-<div class="card" onclick="openProject('video2.mp4','Project 02','Installation','Realtime')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video2.mp4" muted loop></video></div>
-<div class="info"><h4>Project 02</h4><p>Realtime system</p></div>
-</div>
-
-</div>
-</div>
-
-<!-- ===== VIDEO ===== -->
-<div id="video" class="page">
-<h2>Video</h2>
-<div class="grid">
-
-<div class="card" onclick="openProject('video1.mp4','Video 01','Visual','Sound')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video1.mp4" muted loop></video></div>
-<div class="info"><h4>Video 01</h4><p>Realtime visual</p></div>
-</div>
-
-<div class="card" onclick="openProject('video2.mp4','Video 02','Experiment','AV')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video2.mp4" muted loop></video></div>
-<div class="info"><h4>Video 02</h4><p>Experimental AV</p></div>
-</div>
-
-</div>
-</div>
-
-<!-- ===== VISUAL ===== -->
+<!-- ===== VISUAL（重点改动） ===== -->
 <div id="visual" class="page">
 <h2>Visual</h2>
 <div class="grid">
 
-<div class="card">
-<div class="media"><img src="images/visual1.jpg"></div>
-<div class="info"><h4>Visual 01</h4><p>Still image</p></div>
+<div class="card"
+onclick="openImage('images/visual001.jpg','VISUAL001','Still Image','')">
+<div class="media">
+<img src="images/visual001.jpg">
 </div>
-
-<div class="card">
-<div class="media"><img src="images/visual2.jpg"></div>
-<div class="info"><h4>Visual 02</h4><p>Artwork</p></div>
-</div>
-
+<div class="info">
+<h4>VISUAL001</h4>
+<p>Still image</p>
 </div>
 </div>
 
-<!-- ===== CGI ===== -->
-<div id="cgi" class="page">
-<h2>CGI</h2>
-<div class="grid">
-
-<div class="card" onclick="openProject('video1.mp4','CGI 01','Render','UE')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video1.mp4" muted loop></video></div>
-<div class="info"><h4>CGI 01</h4><p>Procedural render</p></div>
+<div class="card"
+onclick="openImage('images/visual002.jpg','VISUAL002','Artwork','')">
+<div class="media">
+<img src="images/visual002.jpg">
 </div>
-
-<div class="card" onclick="openProject('video2.mp4','CGI 02','Animation','Blender')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video2.mp4" muted loop></video></div>
-<div class="info"><h4>CGI 02</h4><p>3D animation</p></div>
+<div class="info">
+<h4>VISUAL002</h4>
+<p>Artwork</p>
+</div>
 </div>
 
 </div>
 </div>
 
-<!-- ===== INSTALLATION ===== -->
-<div id="installation" class="page">
-<h2>Installation</h2>
-<div class="grid">
-
-<div class="card" onclick="openProject('video1.mp4','Install 01','Interactive','TD')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video1.mp4" muted loop></video></div>
-<div class="info"><h4>Install 01</h4><p>Interactive space</p></div>
-</div>
-
-<div class="card" onclick="openProject('video2.mp4','Install 02','Stage','Sensor')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video2.mp4" muted loop></video></div>
-<div class="info"><h4>Install 02</h4><p>Stage system</p></div>
-</div>
-
-</div>
-</div>
-
-<!-- ===== SOUND ===== -->
-<div id="sound" class="page">
-<h2>Sound</h2>
-<div class="grid">
-
-<div class="card" onclick="openProject('video1.mp4','Sound 01','Audio','Mix')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video1.mp4" muted loop></video></div>
-<div class="info"><h4>Sound 01</h4><p>Sound design</p></div>
-</div>
-
-<div class="card" onclick="openProject('video2.mp4','Sound 02','Spatial','Live')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video2.mp4" muted loop></video></div>
-<div class="info"><h4>Sound 02</h4><p>Spatial audio</p></div>
-</div>
-
-</div>
-</div>
-
-<!-- ===== LAB ===== -->
-<div id="lab" class="page">
-<h2>Lab</h2>
-<div class="grid">
-
-<div class="card" onclick="openProject('video1.mp4','Lab 01','AI','Test')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video1.mp4" muted loop></video></div>
-<div class="info"><h4>Lab 01</h4><p>Realtime test</p></div>
-</div>
-
-<div class="card" onclick="openProject('video2.mp4','Lab 02','System','Code')" onmouseenter="this.querySelector('video').play()" onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media"><video src="video2.mp4" muted loop></video></div>
-<div class="info"><h4>Lab 02</h4><p>System experiment</p></div>
-</div>
-
-</div>
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="page">
-<h2>Contact</h2>
-<p>Email: jam.mo.404lab@gmail.com</p>
-</div>
-
-<!-- overlay -->
+<!-- ===== overlay（支持图片+视频） ===== -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeProject()">CLOSE</div>
-<video id="overlayVideo" controls autoplay></video>
+
+<video id="overlayVideo" controls autoplay style="display:none;"></video>
+<img id="overlayImage" style="display:none;">
+
 <div class="overlay-info">
 <h2 id="title"></h2>
 <p id="desc"></p>
@@ -357,12 +255,36 @@ document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
+/* 视频 */
 function openProject(video,title,desc,credits){
 document.getElementById('overlay').style.display='block'
 
 let v=document.getElementById('overlayVideo')
+let img=document.getElementById('overlayImage')
+
+img.style.display='none'
+v.style.display='block'
+
 v.src=video
 v.play()
+
+document.getElementById('title').innerText=title
+document.getElementById('desc').innerText=desc
+document.getElementById('credits').innerText=credits
+}
+
+/* 图片 */
+function openImage(src,title,desc,credits){
+document.getElementById('overlay').style.display='block'
+
+let v=document.getElementById('overlayVideo')
+let img=document.getElementById('overlayImage')
+
+v.pause()
+v.style.display='none'
+img.style.display='block'
+
+img.src=src
 
 document.getElementById('title').innerText=title
 document.getElementById('desc').innerText=desc
