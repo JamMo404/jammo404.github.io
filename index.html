@@ -10,6 +10,7 @@ margin:0;
 background:#000;
 color:#fff;
 font-family:Arial, Helvetica, sans-serif;
+overflow-x:hidden;
 }
 
 /* NAV */
@@ -27,9 +28,7 @@ font-weight:bold;
 cursor:pointer;
 }
 .nav a.active,
-.nav a:hover{
-color:red;
-}
+.nav a:hover{color:red}
 
 /* TITLE */
 .main-title{
@@ -42,21 +41,33 @@ position:relative;
 z-index:2;
 }
 
-/* BRAND 背景放大 */
+/* BRAND 背景 */
 .brand-bg{
 position:absolute;
-top:80px;
+top:120px;
 left:50%;
 transform:translateX(-50%) scale(3);
-opacity:0.15;
+opacity:0.25;
 z-index:1;
 pointer-events:none;
 }
 
+/* AVATAR */
+.avatar{
+display:block;
+margin:40px auto;
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+filter:grayscale(100%);
+}
+.avatar:hover{filter:none}
+
 /* PAGE */
 .page{
 display:none;
-padding:0 8% 120px;
+padding:0 8% 100px;
 }
 .page.active{display:block}
 
@@ -66,80 +77,89 @@ display:grid;
 grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
-
 .role{
 color:red;
 font-weight:bold;
 font-size:18px;
-line-height:2;
-white-space:pre-line;
+line-height:1.6;
+word-break:keep-all;
 }
-
 .text{
 color:#ccc;
 line-height:1.8;
 font-family:"Courier New", monospace;
 }
 
-/* ===== Featured 两列大布局 ===== */
+/* ===== Featured 专用：两列大版面 ===== */
 .featured-grid{
-column-count:2;
-column-gap:40px;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
 }
 
-.featured-item{
-break-inside:avoid;
-margin-bottom:40px;
-cursor:pointer;
-transition:transform .3s;
-}
-
-.featured-item:hover{
-transform:scale(1.03);
-}
-
-/* 卡片 */
-.card{
+.featured-card{
 position:relative;
-width:100%;
-height:420px; /* 放大 */
+height:360px;
 background:#111;
 border:1px solid #333;
+cursor:pointer;
 overflow:hidden;
+transition:0.2s;
 }
 
-.card video{
+.featured-card video{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-.card span{
+.featured-card span{
 position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
 color:#aaa;
-font-size:18px;
+font-size:20px;
 }
 
-.card:hover span{opacity:0}
-
-/* info */
-.info{
-margin-top:10px;
-font-size:16px;
-color:#aaa;
-}
-
-/* 普通 grid */
+/* 普通 GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
 }
 
-/* overlay */
+.card{
+position:relative;
+height:220px;
+background:#111;
+border:1px solid #333;
+cursor:pointer;
+overflow:hidden;
+}
+.card video,.card img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+.card span{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+color:#aaa;
+}
+.card:hover span{opacity:0}
+.card:hover{border-color:red}
+
+/* INFO */
+.info{
+margin-top:8px;
+font-size:14px;
+color:#aaa;
+}
+
+/* OVERLAY */
 .overlay{
 display:none;
 position:fixed;
@@ -149,27 +169,25 @@ width:100%;
 height:100%;
 background:#000;
 z-index:999;
-overflow:auto;
-padding:80px 15%;
 }
-
-.overlay video{
+.overlay video,.overlay img{
 width:100%;
-margin-top:40px;
+height:100%;
+object-fit:contain;
 }
-
 .close{
-position:fixed;
+position:absolute;
 top:20px;
 right:30px;
 cursor:pointer;
 }
+.close:hover{color:red}
 
-/* 联系方式居中 */
+/* CONTACT */
 .contact{
 text-align:center;
 margin-top:100px;
-font-size:20px;
+font-size:18px;
 color:#aaa;
 }
 </style>
@@ -191,32 +209,29 @@ color:#aaa;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
 <video class="brand-bg" src="brand.mp4" autoplay muted loop playsinline></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
 
+<img src="images/avatar.jpg" class="avatar">
+
 <div class="about">
 
 <div class="role">
-Multidisciplinary Artist
-
-Audio-Visual Artist
-
-3D Artist
-
-Multimedia Director
-
+Multidisciplinary Artist<br><br>
+Audio-Visual Artist<br>
+3D Artist<br>
+Multimedia Director<br>
 Interactive Developer
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures. He develops immersive systems that translate real-world data into experiential environments, focusing on spatial cognition, sensory distortion, and temporal displacement.
+Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures, integrating technology, art, and music into hybrid experiential systems.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音艺术与交互系统的融合。他的创作围绕“计算感知”与“知觉空间”，通过非线性视听结构构建沉浸式体验，将现实数据转译为感知环境，探索空间认知、感官错位与时间重构。
+Jam Mo是一位多学科艺术创作者，聚焦CGI动画、实时视觉、声音艺术与交互系统。他的创作围绕“计算感知”与“知觉空间”，通过非线性视听结构构建跨媒介体验。
 </div>
 
 </div>
@@ -227,7 +242,7 @@ Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音�
 <div class="featured-grid" id="featuredGrid"></div>
 </div>
 
-<!-- 其它 -->
+<!-- 其他 -->
 <div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
 <div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
 <div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
@@ -239,39 +254,34 @@ Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音�
 <div class="contact">jam.mo.404lab@gmail.com</div>
 </div>
 
-<!-- overlay -->
+<!-- OVERLAY -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeOverlay()">CLOSE</div>
-<div id="detail"></div>
+<video id="overlayVideo" controls autoplay></video>
+<img id="overlayImg" style="display:none;">
 </div>
 
 <script>
-function showPage(id,el){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-document.getElementById(id).classList.add('active')
-document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
-el.classList.add('active')
-}
 
-/* Featured 卡片（大） */
+/* ===== 卡片生成 ===== */
 function createFeatured(src,cover,title){
 return `
-<div class="featured-item" onclick="openDetail('${src}','${title}')">
-<div class="card">
-<video src="${src}" poster="${cover}" muted loop
-onmouseenter="this.play()"
-onmouseleave="this.pause();this.currentTime=0;"></video>
+<div>
+<div class="featured-card"
+onmousemove="bubble(this,event)"
+onmouseleave="resetBubble(this)"
+onclick="openVideo('${src}')">
+<video src="${src}" poster="${cover}" muted loop></video>
 <span>${title}</span>
 </div>
 <div class="info">${title}</div>
 </div>`
 }
 
-/* 普通卡片 */
 function createVideo(src,cover,title){
 return `
 <div>
-<div class="card" onclick="openDetail('${src}','${title}')">
+<div class="card" onclick="openVideo('${src}')">
 <video src="${src}" poster="${cover}" muted loop></video>
 <span>${title}</span>
 </div>
@@ -290,27 +300,20 @@ return `
 </div>`
 }
 
-/* 自动生成 */
+/* ===== 自动加载 ===== */
 function loadWorks(){
 
-let featured='',video='',cgi='',installation='',sound='',lab='',visual=''
+let featured='',video='',cgi='',installation='',sound='',lab=''
 
 for(let i=1;i<=10;i++){
 let n=String(i).padStart(3,'0')
 
-featured+=createFeatured(
-`videoall/featured${n}.mp4`,
-`images/featuredcover${n}.jpg`,
-`featured${n}`
-)
-
+featured+=createFeatured(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
 video+=createVideo(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
 cgi+=createVideo(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
 installation+=createVideo(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
 sound+=createVideo(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
 lab+=createVideo(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
-
-visual+=createImage(`images/visual${n}.jpg`,`visual${n}`)
 }
 
 document.getElementById('featuredGrid').innerHTML=featured
@@ -319,30 +322,66 @@ document.getElementById('cgiGrid').innerHTML=cgi
 document.getElementById('installationGrid').innerHTML=installation
 document.getElementById('soundGrid').innerHTML=sound
 document.getElementById('labGrid').innerHTML=lab
+
+let visual=''
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+visual+=createImage(`images/visual${n}.jpg`,`visual${n}`)
+}
 document.getElementById('visualGrid').innerHTML=visual
 }
 
 window.onload=loadWorks
 
-/* 详情页 */
-function openDetail(src,title){
+/* ===== 水滴挤压（2D）===== */
+function bubble(el,e){
+let r=el.getBoundingClientRect()
+let x=(e.clientX-r.left)/r.width-0.5
+let y=(e.clientY-r.top)/r.height-0.5
+
+let scale=1.1
+let skewX=x*10
+let skewY=y*10
+
+el.style.transform=`scale(${scale}) skew(${skewX}deg,${skewY}deg)`
+}
+
+function resetBubble(el){
+el.style.transform='scale(1)'
+}
+
+/* ===== 页面切换 ===== */
+function showPage(id,el){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
+el.classList.add('active')
+}
+
+/* ===== 播放 ===== */
+function openVideo(src){
+let v=document.getElementById('overlayVideo')
+let i=document.getElementById('overlayImg')
+i.style.display='none'
+v.style.display='block'
+v.src=src
 document.getElementById('overlay').style.display='block'
-document.getElementById('detail').innerHTML=`
-<h1>${title}</h1>
-<p>Project description here...</p>
-<video src="${src}" controls autoplay></video>
-`
 }
 
 function openImage(src){
+let v=document.getElementById('overlayVideo')
+let i=document.getElementById('overlayImg')
+v.style.display='none'
+i.style.display='block'
+i.src=src
 document.getElementById('overlay').style.display='block'
-document.getElementById('detail').innerHTML=`<img src="${src}" style="width:100%">`
 }
 
 function closeOverlay(){
 document.getElementById('overlay').style.display='none'
-document.getElementById('detail').innerHTML=''
+document.getElementById('overlayVideo').pause()
 }
+
 </script>
 
 </body>
