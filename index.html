@@ -34,18 +34,29 @@ transition:.3s;
 color:red;
 }
 
-/* 标题 */
+/* ===== 标题（打印机风格）===== */
 .main-title{
 text-align:center;
-font-family:Futura,Arial;
+font-family:"Courier New", monospace;
 font-size:64px;
-margin:40px 0 20px;
+letter-spacing:6px;
+margin:40px 0 10px;
 }
 
-/* 头像 */
+/* ===== brand 预览窗口 ===== */
+.brand{
+display:block;
+margin:0 auto 40px;
+width:320px;
+height:180px;
+object-fit:cover;
+border:1px solid #333;
+}
+
+/* ===== 头像（只在about）===== */
 .avatar{
 display:block;
-margin:0 auto 60px;
+margin:40px auto 60px;
 width:140px;
 height:140px;
 object-fit:cover;
@@ -171,15 +182,22 @@ color:#aaa;
 <a onclick="showPage('contact', this)">Contact</a>
 </div>
 
+<!-- ===== 标题（所有页面都有）===== -->
 <h1 class="main-title">JAM MO</h1>
+
+<!-- ===== brand 预览 ===== -->
+<video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
+
+<!-- ===== ABOUT ===== -->
+<div id="about" class="page active">
+
+<!-- 头像只在about -->
 <img src="images/avatar.jpg" class="avatar">
 
-<!-- ABOUT -->
-<div id="about" class="page active">
 <div class="about">
 
 <div>
-<h3>Focus</h3>
+<h3>Practice</h3>
 <p style="color:red;">
 Multidisciplinary Artist<br>
 Audio-Visual Artist<br>
@@ -201,16 +219,14 @@ His works are primarily realized across concert stages, music festival stages, u
 <h3>关于</h3>
 <p style="color:#ccc;">
 Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。
-作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
+作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景置。
 </p>
 </div>
 
 </div>
 </div>
 
-<!-- ===== 卡片模板复用 ===== -->
-
-<!-- FEATURED -->
+<!-- ===== FEATURED ===== -->
 <div id="featured" class="page">
 <h2>FeaturedProject</h2>
 <div class="grid">
@@ -219,14 +235,16 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')"
 onmouseenter="let v=this.querySelector('video'); v.play()"
 onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
+
 <video src="video1.mp4" poster="images/cover1.jpg" muted loop playsinline></video>
 <span>Project 01</span>
+
 </div>
 
 </div>
 </div>
 
-<!-- VIDEO -->
+<!-- ===== VIDEO ===== -->
 <div id="video" class="page">
 <h2>Video</h2>
 <div class="grid">
@@ -250,57 +268,18 @@ onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
 </div>
 </div>
 
-<!-- VISUAL -->
-<div id="visual" class="page">
-<h2>Visual</h2>
-<div class="grid">
-<div class="card"><span>Visual Project</span></div>
-</div>
-</div>
+<!-- 其它类目（保持结构） -->
+<div id="visual" class="page"><h2>Visual</h2></div>
+<div id="cgi" class="page"><h2>CGI</h2></div>
+<div id="installation" class="page"><h2>Installation</h2></div>
+<div id="sound" class="page"><h2>Sound</h2></div>
+<div id="lab" class="page"><h2>Lab</h2></div>
+<div id="contact" class="page"><h2>Contact</h2></div>
 
-<!-- CGI -->
-<div id="cgi" class="page">
-<h2>CGI</h2>
-<div class="grid">
-<div class="card"><span>CGI Work</span></div>
-</div>
-</div>
-
-<!-- INSTALLATION -->
-<div id="installation" class="page">
-<h2>Installation</h2>
-<div class="grid">
-<div class="card"><span>Installation Work</span></div>
-</div>
-</div>
-
-<!-- SOUND -->
-<div id="sound" class="page">
-<h2>Sound</h2>
-<div class="grid">
-<div class="card"><span>Sound Project</span></div>
-</div>
-</div>
-
-<!-- LAB -->
-<div id="lab" class="page">
-<h2>Lab</h2>
-<div class="grid">
-<div class="card"><span>Experiment</span></div>
-</div>
-</div>
-
-<!-- CONTACT -->
-<div id="contact" class="page">
-<h2>Contact</h2>
-<p>jam.mo.404lab@gmail.com</p>
-</div>
-
-<!-- OVERLAY -->
+<!-- overlay -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeProject()">CLOSE</div>
 <video id="overlayVideo" controls autoplay></video>
-
 <div class="overlay-info">
 <h2 id="title"></h2>
 <p id="desc"></p>
