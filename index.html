@@ -34,7 +34,7 @@ transition:.3s;
 color:red;
 }
 
-/* ===== 标题（打印机风格）===== */
+/* 标题（打印机风） */
 .main-title{
 text-align:center;
 font-family:"Courier New", monospace;
@@ -43,17 +43,17 @@ letter-spacing:6px;
 margin:40px 0 10px;
 }
 
-/* ===== brand 预览窗口 ===== */
+/* brand 视频（无边框） */
 .brand{
 display:block;
 margin:0 auto 40px;
 width:320px;
 height:180px;
 object-fit:cover;
-border:1px solid #333;
+border:none;
 }
 
-/* ===== 头像（只在about）===== */
+/* 头像（只在about） */
 .avatar{
 display:block;
 margin:40px auto 60px;
@@ -87,6 +87,12 @@ display:block;
 display:grid;
 grid-template-columns:1fr 2fr 2fr;
 gap:40px;
+}
+
+.typewriter{
+font-family:"Courier New", monospace;
+color:#ddd;
+line-height:1.8;
 }
 
 /* GRID */
@@ -182,16 +188,15 @@ color:#aaa;
 <a onclick="showPage('contact', this)">Contact</a>
 </div>
 
-<!-- ===== 标题（所有页面都有）===== -->
+<!-- 标题 -->
 <h1 class="main-title">JAM MO</h1>
 
-<!-- ===== brand 预览 ===== -->
-<video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
+<!-- brand（自动播放） -->
+<video class="brand" src="brand.mp4" autoplay muted loop playsinline preload="auto"></video>
 
 <!-- ===== ABOUT ===== -->
 <div id="about" class="page active">
 
-<!-- 头像只在about -->
 <img src="images/avatar.jpg" class="avatar">
 
 <div class="about">
@@ -199,7 +204,7 @@ color:#aaa;
 <div>
 <h3>Practice</h3>
 <p style="color:red;">
-Multidisciplinary Artist<br>
+Mutidisciplinary Artist<br>
 Audio-Visual Artist<br>
 3D Artist<br>
 Multimedia Director<br>
@@ -209,7 +214,7 @@ Interactive Developer
 
 <div>
 <h3>About</h3>
-<p style="color:#ccc;">
+<p class="typewriter">
 Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
 His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
 </p>
@@ -217,16 +222,16 @@ His works are primarily realized across concert stages, music festival stages, u
 
 <div>
 <h3>关于</h3>
-<p style="color:#ccc;">
+<p class="typewriter">
 Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。
-作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景置。
+作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
 </p>
 </div>
 
 </div>
 </div>
 
-<!-- ===== FEATURED ===== -->
+<!-- FEATURED -->
 <div id="featured" class="page">
 <h2>FeaturedProject</h2>
 <div class="grid">
@@ -235,16 +240,14 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')"
 onmouseenter="let v=this.querySelector('video'); v.play()"
 onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
-
 <video src="video1.mp4" poster="images/cover1.jpg" muted loop playsinline></video>
 <span>Project 01</span>
-
 </div>
 
 </div>
 </div>
 
-<!-- ===== VIDEO ===== -->
+<!-- VIDEO -->
 <div id="video" class="page">
 <h2>Video</h2>
 <div class="grid">
@@ -268,7 +271,7 @@ onmouseleave="let v=this.querySelector('video'); v.pause(); v.currentTime=0;">
 </div>
 </div>
 
-<!-- 其它类目（保持结构） -->
+<!-- 其它类目 -->
 <div id="visual" class="page"><h2>Visual</h2></div>
 <div id="cgi" class="page"><h2>CGI</h2></div>
 <div id="installation" class="page"><h2>Installation</h2></div>
