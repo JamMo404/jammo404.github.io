@@ -105,14 +105,12 @@ border:1px solid #333;
 overflow:hidden;
 }
 
-/* 视频 */
 .media video{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* 图片 */
 .media img{
 width:100%;
 height:100%;
@@ -224,110 +222,91 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 </div>
 
-<!-- ===== FEATURED ===== -->
-<div id="featured" class="page">
-<h2>FeaturedProject</h2>
-<div class="grid">
-
-<div class="card"
-onclick="openProject('video1.mp4','Project 01','Featured Work','AV + Code')"
-onmouseenter="this.querySelector('video')?.play()"
-onmouseleave="let v=this.querySelector('video'); if(v){v.pause();v.currentTime=0;}">
-<div class="media">
-<video src="video1.mp4" muted loop playsinline></video>
-</div>
-<div class="info">
-<h4>Project 01</h4>
-<p>Featured audiovisual work</p>
-</div>
-</div>
-
-</div>
-</div>
-
-<!-- ===== VIDEO ===== -->
-<div id="video" class="page">
-<h2>Video</h2>
-<div class="grid">
-
-<div class="card"
-onclick="openProject('video1.mp4','Video 01','Realtime Visual','Sound Design')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media">
-<video src="video1.mp4" muted loop playsinline></video>
-</div>
-<div class="info">
-<h4>Video 01</h4>
-<p>Realtime visual performance</p>
-</div>
-</div>
-
-<div class="card"
-onclick="openProject('video2.mp4','Video 02','Experiment','AV')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<div class="media">
-<video src="video2.mp4" muted loop playsinline></video>
-</div>
-<div class="info">
-<h4>Video 02</h4>
-<p>Experimental audiovisual</p>
-</div>
-</div>
-
-</div>
-</div>
-
-<!-- ===== VISUAL ===== -->
-<div id="visual" class="page">
-<h2>Visual</h2>
-<div class="grid">
-
-<div class="card">
-<div class="media">
-<img src="images/visual1.jpg">
-</div>
-<div class="info">
-<h4>Visual Work</h4>
-<p>Static image exploration</p>
-</div>
-</div>
-
-</div>
-</div>
-
 <!-- ===== CGI ===== -->
 <div id="cgi" class="page">
 <h2>CGI</h2>
-<div class="grid"></div>
+<div class="grid">
+
+<div class="card"
+onclick="openProject('video1.mp4','CGI Work','3D Render','Blender + UE')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media">
+<video src="video1.mp4" muted loop></video>
+</div>
+<div class="info">
+<h4>CGI Work</h4>
+<p>3D procedural render</p>
+</div>
+</div>
+
+</div>
 </div>
 
 <!-- ===== INSTALLATION ===== -->
 <div id="installation" class="page">
 <h2>Installation</h2>
-<div class="grid"></div>
+<div class="grid">
+
+<div class="card"
+onclick="openProject('video1.mp4','Installation','Interactive Space','Sensor + TouchDesigner')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media">
+<video src="video1.mp4" muted loop></video>
+</div>
+<div class="info">
+<h4>Installation</h4>
+<p>Interactive audiovisual space</p>
+</div>
+</div>
+
+</div>
 </div>
 
 <!-- ===== SOUND ===== -->
 <div id="sound" class="page">
 <h2>Sound</h2>
-<div class="grid"></div>
+<div class="grid">
+
+<div class="card"
+onclick="openProject('video2.mp4','Sound Work','Audio Design','Spatial Audio')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media">
+<video src="video2.mp4" muted loop></video>
+</div>
+<div class="info">
+<h4>Sound Work</h4>
+<p>Sound design / composition</p>
+</div>
+</div>
+
+</div>
 </div>
 
 <!-- ===== LAB ===== -->
 <div id="lab" class="page">
 <h2>Lab</h2>
-<div class="grid"></div>
+<div class="grid">
+
+<div class="card"
+onclick="openProject('video2.mp4','Experiment','Realtime Test','AI + Visual')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<div class="media">
+<video src="video2.mp4" muted loop></video>
+</div>
+<div class="info">
+<h4>Experiment</h4>
+<p>Realtime experiment</p>
+</div>
 </div>
 
-<!-- ===== CONTACT ===== -->
-<div id="contact" class="page">
-<h2>Contact</h2>
-<p>Email: jam.mo.404lab@gmail.com</p>
+</div>
 </div>
 
-<!-- ===== OVERLAY ===== -->
+<!-- overlay -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeProject()">CLOSE</div>
 <video id="overlayVideo" controls autoplay></video>
