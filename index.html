@@ -5,57 +5,21 @@
 <title>jammo</title>
 
 <style>
-body{
-margin:0;
-background:#000;
-color:#fff;
-font-family:Arial, Helvetica, sans-serif;
-overflow-x:hidden;
-}
+body{margin:0;background:#000;color:#fff;font-family:Arial, Helvetica, sans-serif;}
 
-/* NAV */
-.nav{
-display:flex;
-justify-content:center;
-gap:30px;
-padding:25px 10px;
-flex-wrap:wrap;
-z-index:10;
-position:relative;
-}
+.nav{display:flex;justify-content:center;gap:30px;padding:25px 10px;flex-wrap:wrap;}
 .nav a{color:#888;text-decoration:none;font-weight:bold;cursor:pointer;}
 .nav a.active,.nav a:hover{color:red}
 
-/* ===== TITLE + BRAND 区域 ===== */
-.hero{
-position:relative;
-text-align:center;
-margin-top:40px;
-}
+.main-title{text-align:center;font-size:72px;font-weight:900;letter-spacing:6px;margin:40px 0 10px;}
 
-/* TITLE */
-.main-title{
-font-size:72px;
-font-weight:900;
-letter-spacing:6px;
-margin-bottom:20px;
-position:relative;
-z-index:2;
-}
-
-/* ===== BRAND 背景视频 ===== */
-.brand-bg{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%) scale(3);
+/* ✅ brand */
+.brand{
+display:block;
+margin:0 auto 40px;
 width:320px;
 height:180px;
 object-fit:cover;
-opacity:0.25;
-pointer-events:none;
-z-index:1;
-transition:transform 0.2s ease-out, opacity 0.6s;
 }
 
 /* AVATAR */
@@ -81,13 +45,17 @@ grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
 
-/* ROLE */
+/* ✅ ROLE 间距 */
 .role{
 color:red;
 font-weight:bold;
 font-size:18px;
+line-height:1.6;
+word-break:keep-all;
 }
-.role div{margin-bottom:22px}
+.role div{
+margin-bottom:20px;
+}
 
 /* TEXT */
 .text{
@@ -104,13 +72,8 @@ gap:30px;
 }
 
 /* FEATURED */
-.masonry{
-column-count:2;
-column-gap:30px;
-}
-@media(max-width:900px){
-.masonry{column-count:1;}
-}
+.masonry{column-count:2;column-gap:30px;}
+@media(max-width:900px){.masonry{column-count:1;}}
 .masonry-item{
 break-inside:avoid;
 margin-bottom:30px;
@@ -177,7 +140,7 @@ cursor:pointer;
 <!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
-<a onclick="showPage('featured',this)">Featured Project</a>
+<a onclick="showPage('featured',this)">Featured</a>
 <a onclick="showPage('video',this)">Video</a>
 <a onclick="showPage('visual',this)">Visual</a>
 <a onclick="showPage('cgi',this)">CGI</a>
@@ -187,12 +150,10 @@ cursor:pointer;
 <a onclick="showPage('contact',this)">Contact</a>
 </div>
 
-<!-- HERO（标题 + 背景视频） -->
-<div class="hero">
-
 <h1 class="main-title">JAM MO</h1>
 
-<video class="brand-bg"
+<!-- ✅ brand（修复移动端自动播放） -->
+<video class="brand"
 src="brand.mp4"
 autoplay
 muted
@@ -201,8 +162,6 @@ playsinline
 webkit-playsinline
 preload="auto">
 </video>
-
-</div>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
@@ -219,10 +178,12 @@ preload="auto">
 <div>INTERACTIVE DEVELOPER</div>
 </div>
 
+<!-- ✅ 完整英文 -->
 <div class="text">
 Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation. His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
 </div>
 
+<!-- ✅ 完整中文 -->
 <div class="text">
 Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，通过跨学科与跨文化实践探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。作品实践主要呈现在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
 </div>
@@ -235,7 +196,7 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 <div class="masonry" id="featuredGrid"></div>
 </div>
 
-<!-- 其它 -->
+<!-- 其它类目 -->
 <div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
 <div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
 <div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
@@ -247,8 +208,120 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 <p style="text-align:center;">Email: jam.mo.404lab@gmail.com</p>
 </div>
 
-<!-- JS（保持你原来的逻辑） -->
+<!-- 作品页 -->
+<div id="workPage" class="page">
+<div style="max-width:900px;margin:auto;padding-top:40px;">
+<h2 id="workTitle"></h2>
+<p id="workDesc" style="color:#aaa;"></p>
+<video id="workVideo" controls></video>
+</div>
+</div>
+
+<!-- 图片 overlay -->
+<div id="overlay" class="overlay">
+<div class="close" onclick="closeOverlay()">CLOSE</div>
+<img id="overlayImg">
+</div>
+
 <script>
+function createVideoCard(src,cover,title){
+return `
+<div>
+<div class="card"
+onclick="openWork('${src}','${title}')"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
+<video src="${src}" poster="${cover}" muted loop></video>
+<span>${title}</span>
+</div>
+<div class="info">${title}</div>
+</div>`
+}
+
+function createImageCard(src,title){
+return `
+<div>
+<div class="card" onclick="openImage('${src}')">
+<img src="${src}">
+<span>${title}</span>
+</div>
+<div class="info">${title}</div>
+</div>`
+}
+
+function loadWorks(){
+let featured='',video='',cgi='',installation='',sound='',lab=''
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+
+featured+=`<div class="masonry-item">`+
+createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
++`</div>`
+
+video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
+cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
+installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
+sound+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
+lab+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
+}
+
+document.getElementById('featuredGrid').innerHTML=featured
+document.getElementById('videoGrid').innerHTML=video
+document.getElementById('cgiGrid').innerHTML=cgi
+document.getElementById('installationGrid').innerHTML=installation
+document.getElementById('soundGrid').innerHTML=sound
+document.getElementById('labGrid').innerHTML=lab
+
+let visual=''
+for(let i=1;i<=10;i++){
+let n=String(i).padStart(3,'0')
+visual+=createImageCard(`images/visual${n}.jpg`,`visual${n}`)
+}
+document.getElementById('visualGrid').innerHTML=visual
+}
+
+/* liquid */
+function enableLiquidEffect(){
+const container=document.getElementById("featuredGrid")
+container.addEventListener("mousemove",(e)=>{
+container.querySelectorAll(".masonry-item").forEach(item=>{
+let r=item.getBoundingClientRect()
+let dx=e.clientX-(r.left+r.width/2)
+let dy=e.clientY-(r.top+r.height/2)
+let dist=Math.sqrt(dx*dx+dy*dy)
+let max=300
+if(dist<max){
+let f=(max-dist)/max
+item.style.transform=`translate(${-dx*f*0.25}px,${-dy*f*0.25}px) scale(${1+f*0.35})`
+}else{
+item.style.transform="translate(0,0) scale(1)"
+}
+})
+})
+}
+
+/* work */
+function openWork(src,title){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById('workPage').classList.add('active')
+document.getElementById('workVideo').src=src
+document.getElementById('workTitle').innerText=title
+document.getElementById('workDesc').innerText="Project description..."
+}
+
+/* fullscreen */
+document.getElementById("workVideo").onclick=function(){
+if(this.requestFullscreen){this.requestFullscreen()}
+}
+
+function openImage(src){
+document.getElementById('overlay').style.display='block'
+document.getElementById('overlayImg').src=src
+}
+function closeOverlay(){
+document.getElementById('overlay').style.display='none'
+}
+
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById(id).classList.add('active')
@@ -256,14 +329,10 @@ document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
-/* ===== BRAND 微交互 ===== */
-const brand = document.querySelector(".brand-bg")
-
-window.addEventListener("mousemove",(e)=>{
-let x = (e.clientX/window.innerWidth - 0.5) * 30
-let y = (e.clientY/window.innerHeight - 0.5) * 30
-brand.style.transform = `translate(-50%,-50%) scale(3) translate(${x}px,${y}px)`
-})
+window.onload=function(){
+loadWorks()
+enableLiquidEffect()
+}
 </script>
 
 </body>
