@@ -9,7 +9,7 @@ body{
 margin:0;
 background:#000;
 color:#fff;
-font-family:Arial;
+font-family:Arial, Helvetica, sans-serif;
 }
 
 /* NAV */
@@ -17,49 +17,81 @@ font-family:Arial;
 display:flex;
 justify-content:center;
 gap:30px;
-padding:30px 0;
+padding:25px 10px;
 flex-wrap:wrap;
 }
 .nav a{
 color:#888;
-text-decoration:none;
 cursor:pointer;
+text-decoration:none;
+font-weight:bold;
 }
-.nav a.active{color:red}
+.nav a.active,
+.nav a:hover{color:red;}
 
-/* 标题 */
+/* TITLE */
 .main-title{
 text-align:center;
 font-size:72px;
 font-weight:900;
-letter-spacing:4px;
+letter-spacing:6px;
+margin:30px 0 10px;
 }
 
-/* brand */
+/* BRAND */
 .brand{
 display:block;
-margin:20px auto;
+margin:0 auto 40px;
 width:320px;
 height:180px;
 object-fit:cover;
 }
 
+/* AVATAR */
+.avatar{
+display:block;
+margin:40px auto;
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+filter:grayscale(100%);
+}
+.avatar:hover{filter:none}
+
+/* PAGE */
+.page{display:none;padding:0 8% 100px;}
+.page.active{display:block}
+
+/* ABOUT */
+.about{
+display:grid;
+grid-template-columns:1fr 2fr 2fr;
+gap:40px;
+}
+.typewriter{
+font-family:"Courier New";
+line-height:1.8;
+color:#ccc;
+}
+
 /* GRID */
 .grid{
 display:grid;
-grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-gap:30px;
-padding:40px;
+grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+gap:25px;
 }
 
-/* 卡片 */
+/* CARD */
 .card{
 position:relative;
-height:200px;
+height:180px;
 background:#111;
+border:1px solid #333;
 cursor:pointer;
 overflow:hidden;
 }
+.card:hover{border-color:red}
 
 .card video,
 .card img{
@@ -76,7 +108,7 @@ font-size:12px;
 color:#aaa;
 }
 
-/* overlay */
+/* OVERLAY */
 .overlay{
 display:none;
 position:fixed;
@@ -87,147 +119,166 @@ height:100%;
 background:#000;
 z-index:999;
 }
-
 .overlay video,
 .overlay img{
 width:100%;
 height:100%;
 object-fit:contain;
 }
-
 .close{
 position:absolute;
-top:30px;
-right:40px;
+top:20px;
+right:30px;
 cursor:pointer;
+color:#aaa;
 }
+.close:hover{color:red;}
 </style>
 </head>
 
 <body>
 
+<!-- NAV -->
 <div class="nav">
-<a onclick="loadVideos()" class="active">Video</a>
-<a onclick="loadImages()">Visual</a>
+<a onclick="showPage('about',this)" class="active">About</a>
+<a onclick="showPage('featured',this)">FeaturedProject</a>
+<a onclick="showPage('video',this)">Video</a>
+<a onclick="showPage('visual',this)">Visual</a>
+<a onclick="showPage('cgi',this)">CGI</a>
+<a onclick="showPage('installation',this)">Installation</a>
+<a onclick="showPage('sound',this)">Sound</a>
+<a onclick="showPage('lab',this)">Lab</a>
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
 <video class="brand" src="brand.mp4" autoplay muted loop></video>
 
-<div id="grid" class="grid"></div>
+<!-- ABOUT -->
+<div id="about" class="page active">
 
-<div id="overlay" class="overlay" onclick="closeOverlay()">
-<div class="close">CLOSE</div>
+<img src="images/avatar.jpg" class="avatar">
+
+<div class="about">
+
+<div>
+<p style="color:red;white-space:nowrap;">
+MULTIDISCIPLINARY ARTIST<br>
+AUDIO-VISUAL ARTIST<br>
+3D ARTIST<br>
+MULTIMEDIA DIRECTOR<br>
+INTERACTIVE DEVELOPER
+</p>
+</div>
+
+<div class="typewriter">
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
+His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
+</div>
+
+<div class="typewriter">
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。
+作品实践主要在演唱会舞台、音乐节舞台、高校文化与艺术实验室、戏剧空间以及美术馆等场景。
+</div>
+
+</div>
+</div>
+
+<!-- PAGES -->
+<div id="featured" class="page"><div class="grid" id="featuredGrid"></div></div>
+<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
+<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
+<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
+<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
+<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
+<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay">
+<div class="close" onclick="closeOverlay()">CLOSE</div>
 <div id="viewer"></div>
 </div>
 
 <script>
-const USER = "JamMo404"
-const REPO = "jammo404.github.io"
 
-/* ===== 读取 GitHub 文件 ===== */
-async function fetchFiles(folder){
-let url = `https://api.github.com/repos/${USER}/${REPO}/contents/${folder}`
-let res = await fetch(url)
-return await res.json()
+/* 切换页面 */
+function showPage(id,el){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
+el.classList.add('active')
 }
 
-/* ===== 加载视频 ===== */
-async function loadVideos(){
-setActive(0)
-let files = await fetchFiles("video")
-
-let grid = document.getElementById("grid")
-grid.innerHTML = ""
-
-files
-.filter(f=>f.name.endsWith(".mp4") || f.name.endsWith(".webm"))
-.sort((a,b)=>a.name.localeCompare(b.name))
-.forEach((file,i)=>{
-
-let title = `video${String(i+1).padStart(3,"0")}`
-
-let div = document.createElement("div")
-div.className="card"
-
-div.innerHTML = `
-<video src="${file.download_url}" muted loop></video>
-<span>${title}</span>
-`
-
-div.onmouseenter = ()=>div.querySelector("video").play()
-div.onmouseleave = ()=>{
-let v=div.querySelector("video")
-v.pause()
-v.currentTime=0
-}
-
-div.onclick = ()=>openVideo(file.download_url)
-
-grid.appendChild(div)
-})
-}
-
-/* ===== 加载图片 ===== */
-async function loadImages(){
-setActive(1)
-let files = await fetchFiles("images")
-
-let grid = document.getElementById("grid")
-grid.innerHTML = ""
-
-files
-.filter(f=>f.name.match(/\.(jpg|png|webp)/))
-.sort((a,b)=>a.name.localeCompare(b.name))
-.forEach((file,i)=>{
-
-let title = `visual${String(i+1).padStart(3,"0")}`
-
-let div = document.createElement("div")
-div.className="card"
-
-div.innerHTML = `
-<img src="${file.download_url}">
-<span>${title}</span>
-`
-
-div.onclick = ()=>openImage(file.download_url)
-
-grid.appendChild(div)
-})
-}
-
-/* ===== overlay ===== */
+/* overlay */
 function openVideo(src){
-let o=document.getElementById("overlay")
-let v=document.getElementById("viewer")
-
-v.innerHTML = `<video src="${src}" controls autoplay></video>`
-o.style.display="block"
+document.getElementById('overlay').style.display='block'
+document.getElementById('viewer').innerHTML =
+`<video src="${src}" controls autoplay></video>`
 }
-
 function openImage(src){
-let o=document.getElementById("overlay")
-let v=document.getElementById("viewer")
-
-v.innerHTML = `<img src="${src}">`
-o.style.display="block"
+document.getElementById('overlay').style.display='block'
+document.getElementById('viewer').innerHTML =
+`<img src="${src}">`
 }
-
 function closeOverlay(){
-document.getElementById("overlay").style.display="none"
-document.getElementById("viewer").innerHTML=""
+document.getElementById('overlay').style.display='none'
 }
 
-/* nav 状态 */
-function setActive(i){
-document.querySelectorAll(".nav a").forEach(a=>a.classList.remove("active"))
-document.querySelectorAll(".nav a")[i].classList.add("active")
+/* ===== 自动读取 GitHub ===== */
+const repo = "JamMo404/jammo404.github.io"
+
+/* 读取视频 */
+async function loadVideos(){
+let res = await fetch(`https://api.github.com/repos/${repo}/contents/video`)
+let files = await res.json()
+
+let i=1
+files.forEach(f=>{
+if(f.name.endsWith(".mp4")){
+let id = String(i).padStart(3,'0')
+
+let card = `
+<div class="card"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;"
+onclick="openVideo('${f.download_url}')">
+<video src="${f.download_url}" muted loop></video>
+<span>video${id}</span>
+</div>`
+
+document.getElementById("videoGrid").innerHTML += card
+document.getElementById("featuredGrid").innerHTML += card
+
+i++
+}
+})
 }
 
-/* 默认加载 */
+/* 读取图片 */
+async function loadImages(){
+let res = await fetch(`https://api.github.com/repos/${repo}/contents/images`)
+let files = await res.json()
+
+let i=1
+files.forEach(f=>{
+if(f.name.endsWith(".jpg")||f.name.endsWith(".png")){
+let id = String(i).padStart(3,'0')
+
+let card = `
+<div class="card" onclick="openImage('${f.download_url}')">
+<img src="${f.download_url}">
+<span>visual${id}</span>
+</div>`
+
+document.getElementById("visualGrid").innerHTML += card
+i++
+}
+})
+}
+
+/* 初始化 */
 loadVideos()
+loadImages()
+
 </script>
 
 </body>
