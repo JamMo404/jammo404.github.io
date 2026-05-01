@@ -9,75 +9,72 @@ body{
 margin:0;
 background:#000;
 color:#fff;
-font-family:Arial, Helvetica, sans-serif;
+font-family:Arial;
 }
 
 /* NAV */
 .nav{
 display:flex;
 justify-content:center;
-gap:40px;
+gap:30px;
 padding:30px 0;
 flex-wrap:wrap;
 }
-
 .nav a{
-color:#aaa;
+color:#888;
 text-decoration:none;
-font-weight:bold;
 cursor:pointer;
 }
-
-.nav a.active,
-.nav a:hover{color:red;}
+.nav a.active{color:red}
 
 /* 标题 */
 .main-title{
 text-align:center;
-font-size:64px;
+font-size:72px;
 font-weight:900;
 letter-spacing:4px;
-margin:40px 0 10px;
 }
 
 /* brand */
 .brand{
 display:block;
-margin:0 auto 40px;
+margin:20px auto;
 width:320px;
 height:180px;
 object-fit:cover;
 }
 
-/* page */
-.page{
-display:none;
-padding:0 10% 100px;
-}
-.page.active{display:block;}
-
-/* grid */
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
+padding:40px;
 }
 
-/* card */
-.card{cursor:pointer;}
+/* 卡片 */
+.card{
+position:relative;
+height:200px;
+background:#111;
+cursor:pointer;
+overflow:hidden;
+}
 
 .card video,
 .card img{
 width:100%;
-height:200px;
+height:100%;
 object-fit:cover;
-background:#111;
 }
 
-/* info */
-.info{margin-top:8px;}
-.info h4{margin:0;font-size:14px;}
-.info p{margin:0;font-size:12px;color:#777;}
+.card span{
+position:absolute;
+bottom:10px;
+left:10px;
+font-size:12px;
+color:#aaa;
+}
 
 /* overlay */
 .overlay{
@@ -103,176 +100,134 @@ position:absolute;
 top:30px;
 right:40px;
 cursor:pointer;
-color:#aaa;
 }
 </style>
 </head>
 
 <body>
 
-<!-- NAV -->
 <div class="nav">
-<a onclick="showPage('featured',this)" class="active">FeaturedProject</a>
-<a onclick="showPage('video',this)">Video</a>
-<a onclick="showPage('cgi',this)">CGI</a>
-<a onclick="showPage('installation',this)">Installation</a>
-<a onclick="showPage('sound',this)">Sound</a>
-<a onclick="showPage('lab',this)">Lab</a>
-<a onclick="showPage('visual',this)">Visual</a>
+<a onclick="loadVideos()" class="active">Video</a>
+<a onclick="loadImages()">Visual</a>
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-<video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
 
-<!-- pages -->
-<div id="featured" class="page active"><div class="grid" id="featuredGrid"></div></div>
-<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
-<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
-<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
-<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
-<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
-<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
+<video class="brand" src="brand.mp4" autoplay muted loop></video>
 
-<!-- overlay -->
-<div id="overlay" class="overlay">
-<div class="close" onclick="closeOverlay()">CLOSE</div>
-<video id="overlayVideo" controls autoplay></video>
-<img id="overlayImage">
+<div id="grid" class="grid"></div>
+
+<div id="overlay" class="overlay" onclick="closeOverlay()">
+<div class="close">CLOSE</div>
+<div id="viewer"></div>
 </div>
 
 <script>
+const USER = "JamMo404"
+const REPO = "jammo404.github.io"
 
-/* ===== 🎯 所有作品只在这里管理 ===== */
-const WORKS = [
-
-/* VIDEO */
-{
-type:"video",
-src:"video/video001.mp4",
-title:"VIDEO001",
-desc:"Realtime AV performance",
-categories:["featured","video","installation"]
-},
-{
-type:"video",
-src:"video/video002.mp4",
-title:"VIDEO002",
-desc:"Generative system",
-categories:["video","cgi","lab"]
-},
-{
-type:"video",
-src:"video/video003.mp4",
-title:"VIDEO003",
-desc:"Sound reactive visual",
-categories:["video","sound"]
-},
-
-/* VISUAL */
-{
-type:"image",
-src:"images/visual001.jpg",
-title:"VISUAL001",
-desc:"Still frame study",
-categories:["visual"]
-},
-{
-type:"image",
-src:"images/visual002.jpg",
-title:"VISUAL002",
-desc:"Procedural image",
-categories:["visual"]
+/* ===== 读取 GitHub 文件 ===== */
+async function fetchFiles(folder){
+let url = `https://api.github.com/repos/${USER}/${REPO}/contents/${folder}`
+let res = await fetch(url)
+return await res.json()
 }
 
-]
+/* ===== 加载视频 ===== */
+async function loadVideos(){
+setActive(0)
+let files = await fetchFiles("video")
 
-/* ===== 渲染 ===== */
-function render(){
+let grid = document.getElementById("grid")
+grid.innerHTML = ""
 
-WORKS.forEach(w=>{
-w.categories.forEach(cat=>{
-let grid = document.getElementById(cat+"Grid")
-if(!grid) return
+files
+.filter(f=>f.name.endsWith(".mp4") || f.name.endsWith(".webm"))
+.sort((a,b)=>a.name.localeCompare(b.name))
+.forEach((file,i)=>{
 
-let card = document.createElement("div")
-card.className="card"
+let title = `video${String(i+1).padStart(3,"0")}`
 
-if(w.type==="video"){
-card.innerHTML=`
-<video src="${w.src}" muted loop></video>
-<div class="info">
-<h4>${w.title}</h4>
-<p>${w.desc}</p>
-</div>
+let div = document.createElement("div")
+div.className="card"
+
+div.innerHTML = `
+<video src="${file.download_url}" muted loop></video>
+<span>${title}</span>
 `
 
-card.onmouseenter=()=>card.querySelector("video").play()
-card.onmouseleave=()=>{
-let v=card.querySelector("video")
-v.pause();v.currentTime=0
-}
-card.onclick=()=>openVideo(w.src)
+div.onmouseenter = ()=>div.querySelector("video").play()
+div.onmouseleave = ()=>{
+let v=div.querySelector("video")
+v.pause()
+v.currentTime=0
 }
 
-if(w.type==="image"){
-card.innerHTML=`
-<img src="${w.src}">
-<div class="info">
-<h4>${w.title}</h4>
-<p>${w.desc}</p>
-</div>
+div.onclick = ()=>openVideo(file.download_url)
+
+grid.appendChild(div)
+})
+}
+
+/* ===== 加载图片 ===== */
+async function loadImages(){
+setActive(1)
+let files = await fetchFiles("images")
+
+let grid = document.getElementById("grid")
+grid.innerHTML = ""
+
+files
+.filter(f=>f.name.match(/\.(jpg|png|webp)/))
+.sort((a,b)=>a.name.localeCompare(b.name))
+.forEach((file,i)=>{
+
+let title = `visual${String(i+1).padStart(3,"0")}`
+
+let div = document.createElement("div")
+div.className="card"
+
+div.innerHTML = `
+<img src="${file.download_url}">
+<span>${title}</span>
 `
-card.onclick=()=>openImage(w.src)
+
+div.onclick = ()=>openImage(file.download_url)
+
+grid.appendChild(div)
+})
 }
 
-grid.appendChild(card)
-})
-})
-
-}
-
-/* overlay */
+/* ===== overlay ===== */
 function openVideo(src){
-let v=document.getElementById("overlayVideo")
-let i=document.getElementById("overlayImage")
+let o=document.getElementById("overlay")
+let v=document.getElementById("viewer")
 
-i.style.display="none"
-v.style.display="block"
-v.src=src
-v.play()
-
-overlay.style.display="block"
+v.innerHTML = `<video src="${src}" controls autoplay></video>`
+o.style.display="block"
 }
 
 function openImage(src){
-let v=document.getElementById("overlayVideo")
-let i=document.getElementById("overlayImage")
+let o=document.getElementById("overlay")
+let v=document.getElementById("viewer")
 
-v.pause()
-v.style.display="none"
-i.style.display="block"
-i.src=src
-
-overlay.style.display="block"
+v.innerHTML = `<img src="${src}">`
+o.style.display="block"
 }
 
 function closeOverlay(){
-overlay.style.display="none"
-document.getElementById("overlayVideo").pause()
+document.getElementById("overlay").style.display="none"
+document.getElementById("viewer").innerHTML=""
 }
 
-/* 页面切换 */
-function showPage(id,el){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-document.getElementById(id).classList.add('active')
-
-document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
-el.classList.add('active')
+/* nav 状态 */
+function setActive(i){
+document.querySelectorAll(".nav a").forEach(a=>a.classList.remove("active"))
+document.querySelectorAll(".nav a")[i].classList.add("active")
 }
 
-/* init */
-render()
-
+/* 默认加载 */
+loadVideos()
 </script>
 
 </body>
