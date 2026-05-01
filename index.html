@@ -95,7 +95,7 @@ line-height:1.8;
 font-family:"Courier New", monospace;
 }
 
-/* GRID 默认 */
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
@@ -181,7 +181,6 @@ color:#ccc;
 
 <body>
 
-<!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
 <a onclick="showPage('featured',this)">Featured Project</a>
@@ -213,17 +212,16 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，聚焦CGI、实时视觉、声音艺术与交互系统，通过非线性视听结构探索计算感知与知觉空间。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作普遍围绕科技、超自然感与非线性空间叙事展开多维度探索，常以“计算感知”与“知觉空间”的概念体系为核心路径，试图通过跨学科与跨文化的实践方式，探讨多元感知如何在文化与艺术语境中生成时间与空间的错位体验。
 </div>
 
 </div>
 </div>
 
-<!-- JS -->
 <script>
 function createVideoCard(src,cover,title){
 return `
@@ -252,7 +250,6 @@ v.currentTime=0
 resetCard(el)
 }
 
-/* 挤压 */
 function pushEffect(e,el){
 let rect=el.getBoundingClientRect()
 let x=e.clientX-rect.left
@@ -283,7 +280,6 @@ return `
 </div>`
 }
 
-/* 自动生成 */
 function loadWorks(){
 let featured='',video='',cgi='',installation='',sound='',lab=''
 
@@ -346,7 +342,6 @@ document.getElementById('overlayVideo').pause()
 }
 </script>
 
-<!-- PAGES -->
 <div id="featured" class="page">
 <div class="featured-grid" id="featuredGrid"></div>
 </div>
@@ -362,7 +357,6 @@ document.getElementById('overlayVideo').pause()
 <div class="contact">jam.mo.404lab@gmail.com</div>
 </div>
 
-<!-- OVERLAY -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeOverlay()">CLOSE</div>
 <video id="overlayVideo" controls autoplay></video>
