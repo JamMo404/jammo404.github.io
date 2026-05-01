@@ -69,11 +69,11 @@ line-height:1.8;
 color:#ccc;
 }
 
-/* ROLE */
 .role{
 margin:30px 0;
 font-weight:bold;
 text-transform:uppercase;
+line-height:2;
 }
 
 /* GRID */
@@ -95,6 +95,19 @@ height:200px;
 object-fit:cover;
 }
 .card:hover{transform:scale(1.03);}
+
+/* TITLE + DESC */
+.meta{
+padding:10px 5px;
+}
+.meta-title{
+font-size:14px;
+font-weight:bold;
+}
+.meta-desc{
+font-size:12px;
+color:#aaa;
+}
 
 /* ===== Featured 瀑布流 ===== */
 .masonry{
@@ -150,13 +163,11 @@ cursor:pointer;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
 <video class="brand" src="brand.mp4" autoplay muted loop playsinline></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
 <img src="images/avatar.jpg" class="avatar">
-
 <div class="about">
 
 <div class="role">
@@ -168,11 +179,11 @@ INTERACTIVE DEVELOPER
 </div>
 
 <p>
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work explores computational perception and perceptual space through nonlinear audiovisual structures.
+Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures.
 </p>
 
 <p>
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时视觉、声音艺术与交互装置的交叉融合，围绕计算感知与知觉空间展开。
+Jam Mo是一位多学科艺术创作者，专注于CGI、实时视觉、声音艺术与交互系统的融合，围绕计算感知与知觉空间展开创作。
 </p>
 
 </div>
@@ -238,7 +249,7 @@ document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'));
 el.classList.add('active');
 }
 
-/* 打开视频 */
+/* 播放 */
 function openProject(src){
 let v=document.getElementById("overlayVideo");
 v.src=src;
@@ -250,41 +261,45 @@ document.getElementById("overlay").style.display="none";
 document.getElementById("overlayVideo").pause();
 }
 
-/* 生成视频卡片 */
-function videoCard(name,cover){
+/* 卡片 */
+function makeCard(name,cover,title){
 return `
 <div class="card"
 onclick="openProject('${videoPath+name}.mp4')"
 onmouseenter="this.querySelector('video').play()"
 onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<video src="${videoPath+name}.mp4" poster="${imgPath+cover}.jpg" muted loop></video>
+
+<video src="${videoPath+name}.mp4"
+poster="${imgPath+cover}.jpg"
+muted loop></video>
+
+<div class="meta">
+<div class="meta-title">${title}</div>
+<div class="meta-desc">${name}</div>
+</div>
+
 </div>`;
 }
 
-/* FEATURED 瀑布 */
+/* FEATURED */
 function loadFeatured(){
 let html="";
-for(let i=1;i<=10;i++){
+for(let i=1;i<=12;i++){
 let n=String(i).padStart(3,'0');
 html+=`
 <div class="item">
-<div class="card"
-onclick="openProject('${videoPath}featured${n}.mp4')">
-<video src="${videoPath}featured${n}.mp4"
-poster="${imgPath}featuredcover${n}.jpg"
-muted loop></video>
-</div>
+${makeCard("featured"+n,"featuredcover"+n,"FEATURED "+n)}
 </div>`;
 }
 document.getElementById("featuredGrid").innerHTML=html;
 }
 
-/* 其它分类 */
-function loadCategory(prefix,grid){
+/* 分类 */
+function loadCategory(prefix,grid,title){
 let html="";
-for(let i=1;i<=10;i++){
+for(let i=1;i<=12;i++){
 let n=String(i).padStart(3,'0');
-html+=videoCard(prefix+n,prefix+"cover"+n);
+html+=makeCard(prefix+n,prefix+"cover"+n,title+" "+n);
 }
 document.getElementById(grid).innerHTML=html;
 }
@@ -297,18 +312,21 @@ let n=String(i).padStart(3,'0');
 html+=`
 <div class="card">
 <img src="${imgPath}visual${n}.jpg">
+<div class="meta">
+<div class="meta-title">VISUAL ${n}</div>
+</div>
 </div>`;
 }
 document.getElementById("visualGrid").innerHTML=html;
 }
 
-/* 初始化 */
+/* INIT */
 loadFeatured();
-loadCategory("video","videoGrid");
-loadCategory("cgi","cgiGrid");
-loadCategory("installation","installationGrid");
-loadCategory("sound","soundGrid");
-loadCategory("lab","labGrid");
+loadCategory("video","videoGrid","VIDEO");
+loadCategory("cgi","cgiGrid","CGI");
+loadCategory("installation","installationGrid","INSTALLATION");
+loadCategory("sound","soundGrid","SOUND");
+loadCategory("lab","labGrid","LAB");
 loadVisual();
 
 </script>
