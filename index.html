@@ -38,29 +38,22 @@ font-size:72px;
 font-weight:900;
 letter-spacing:6px;
 margin:40px 0 10px;
+position:relative;
+z-index:2;
 }
 
-/* BRAND 背景放大 */
+/* BRAND 背景 */
 .brand-bg{
 position:absolute;
-top:120px;
+top:80px;
 left:50%;
 transform:translateX(-50%) scale(3);
-opacity:0.15;
-pointer-events:none;
+opacity:0.25;
 z-index:0;
+pointer-events:none;
 }
 
-/* PAGE */
-.page{
-display:none;
-padding:0 10% 100px;
-position:relative;
-z-index:1;
-}
-.page.active{display:block}
-
-/* ABOUT */
+/* AVATAR */
 .avatar{
 display:block;
 margin:40px auto;
@@ -72,6 +65,16 @@ filter:grayscale(100%);
 }
 .avatar:hover{filter:none}
 
+/* PAGE */
+.page{
+display:none;
+padding:0 10% 100px;
+position:relative;
+z-index:1;
+}
+.page.active{display:block}
+
+/* ABOUT */
 .about{
 display:grid;
 grid-template-columns:1fr 2fr 2fr;
@@ -82,10 +85,10 @@ gap:40px;
 color:red;
 font-weight:bold;
 font-size:18px;
-line-height:2;
-word-break:keep-all;
+line-height:1.8;
 }
 
+/* TEXT */
 .text{
 color:#ccc;
 line-height:1.8;
@@ -99,31 +102,22 @@ grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
 }
 
-/* ⭐ Featured 专用：两列 */
-#featuredGrid{
+/* 🔥 Featured 两列 */
+.featured-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:40px;
-}
-#featuredGrid .card{
-height:380px;
-}
-
-/* 手机 */
-@media(max-width:768px){
-#featuredGrid{
-grid-template-columns:1fr;
-}
 }
 
 /* CARD */
 .card{
 position:relative;
-height:220px;
+height:260px;
 background:#111;
 border:1px solid #333;
 cursor:pointer;
 overflow:hidden;
+transition:transform 0.2s ease;
 }
 
 .card video,
@@ -176,11 +170,11 @@ cursor:pointer;
 }
 .close:hover{color:red}
 
-/* CONTACT 居中 */
+/* CONTACT */
 .contact{
 text-align:center;
-margin-top:100px;
-font-size:18px;
+margin-top:60px;
+color:#ccc;
 }
 </style>
 </head>
@@ -202,7 +196,6 @@ font-size:18px;
 
 <h1 class="main-title">JAM MO</h1>
 
-<!-- 背景视频 -->
 <video class="brand-bg" src="brand.mp4" autoplay muted loop playsinline></video>
 
 <!-- ABOUT -->
@@ -221,53 +214,26 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist working across CGI, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures, integrating technology, culture, and sensory experience.
+Jam Mo is a multidisciplinary artist whose practice focuses on CGI animation, real-time visuals, sound art, and interactive systems. His work explores computational perception and perceptual space through nonlinear audiovisual structures, integrating technology, culture, and sensory experience across multiple domains including performance, installations, and experimental media environments.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，聚焦于CGI、实时视觉、声音艺术与交互系统。其创作围绕“计算感知”与“知觉空间”，通过非线性视听结构探索技术、文化与感知经验的关系。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时视觉、声音艺术与交互系统。作品围绕“计算感知”与“知觉空间”展开，通过非线性视听结构融合技术、文化与感知经验，广泛应用于舞台、装置与实验媒体环境。
 </div>
 
 </div>
 </div>
 
-<!-- PAGES -->
-<div id="featured" class="page"><div id="featuredGrid"></div></div>
-<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
-<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
-<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
-<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
-<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
-<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
-
-<div id="contact" class="page">
-<div class="contact">jam.mo.404lab@gmail.com</div>
-</div>
-
-<!-- OVERLAY -->
-<div id="overlay" class="overlay">
-<div class="close" onclick="closeOverlay()">CLOSE</div>
-<video id="overlayVideo" controls autoplay></video>
-<img id="overlayImg" style="display:none;">
-</div>
-
+<!-- JS -->
 <script>
-function showPage(id,el){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-document.getElementById(id).classList.add('active')
-document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
-el.classList.add('active')
-}
-
-/* 卡片 */
 function createVideoCard(src,cover,title){
 return `
 <div>
 <div class="card"
-onclick="openVideo('${src}')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0;">
-<video src="${src}" poster="${cover}" muted loop playsinline></video>
+onmousemove="pushEffect(event,this)"
+onmouseleave="resetCard(this)"
+onclick="openVideo('${src}')">
+<video src="${src}" poster="${cover}" muted loop></video>
 <span>${title}</span>
 </div>
 <div class="info">${title}</div>
@@ -285,9 +251,29 @@ return `
 </div>`
 }
 
+/* 🔥 挤压算法 */
+function pushEffect(e,el){
+let rect=el.getBoundingClientRect()
+let x=e.clientX-rect.left
+let y=e.clientY-rect.top
+
+let cx=rect.width/2
+let cy=rect.height/2
+
+let dx=(x-cx)/cx
+let dy=(y-cy)/cy
+
+let scale=1+0.08-Math.sqrt(dx*dx+dy*dy)*0.1
+
+el.style.transform=`scale(${scale}) translate(${dx*10}px,${dy*10}px)`
+}
+
+function resetCard(el){
+el.style.transform="scale(1)"
+}
+
 /* 自动生成 */
 function loadWorks(){
-
 let featured='',video='',cgi='',installation='',sound='',lab=''
 
 for(let i=1;i<=10;i++){
@@ -308,7 +294,6 @@ document.getElementById('installationGrid').innerHTML=installation
 document.getElementById('soundGrid').innerHTML=sound
 document.getElementById('labGrid').innerHTML=lab
 
-/* VISUAL */
 let visual=''
 for(let i=1;i<=10;i++){
 let n=String(i).padStart(3,'0')
@@ -319,7 +304,13 @@ document.getElementById('visualGrid').innerHTML=visual
 
 window.onload=loadWorks
 
-/* 播放 */
+function showPage(id,el){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
+document.getElementById(id).classList.add('active')
+document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
+el.classList.add('active')
+}
+
 function openVideo(src){
 let v=document.getElementById('overlayVideo')
 let i=document.getElementById('overlayImg')
@@ -343,6 +334,29 @@ document.getElementById('overlay').style.display='none'
 document.getElementById('overlayVideo').pause()
 }
 </script>
+
+<!-- PAGES -->
+<div id="featured" class="page">
+<div class="featured-grid" id="featuredGrid"></div>
+</div>
+
+<div id="video" class="page"><div class="grid" id="videoGrid"></div></div>
+<div id="visual" class="page"><div class="grid" id="visualGrid"></div></div>
+<div id="cgi" class="page"><div class="grid" id="cgiGrid"></div></div>
+<div id="installation" class="page"><div class="grid" id="installationGrid"></div></div>
+<div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
+<div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
+
+<div id="contact" class="page">
+<div class="contact">jam.mo.404lab@gmail.com</div>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay">
+<div class="close" onclick="closeOverlay()">CLOSE</div>
+<video id="overlayVideo" controls autoplay></video>
+<img id="overlayImg" style="display:none;">
+</div>
 
 </body>
 </html>
