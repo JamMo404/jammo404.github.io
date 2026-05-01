@@ -39,7 +39,26 @@ color:red;
 text-align:center;
 font-family:Futura,Arial;
 font-size:64px;
-margin:40px 0 80px;
+margin:40px 0 20px;
+}
+
+/* 头像 */
+.avatar{
+display:block;
+margin:0 auto 60px;
+width:140px;
+height:140px;
+object-fit:cover;
+border-radius:50%;
+border:2px solid #333;
+transition:.3s;
+filter:grayscale(100%);
+}
+
+.avatar:hover{
+border-color:red;
+transform:scale(1.05);
+filter:grayscale(0%);
 }
 
 /* 页面 */
@@ -101,7 +120,6 @@ opacity:0;
 transition:0.3s;
 }
 
-/* hover */
 .card:hover video{
 opacity:1;
 }
@@ -177,6 +195,9 @@ color:#aaa;
 
 <h1 class="main-title">JAM MO</h1>
 
+<!-- ✅ 头像 -->
+<img src="images/avatar.jpg" class="avatar">
+
 <!-- ABOUT -->
 <div id="about" class="page active">
 <div class="about">
@@ -211,8 +232,6 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编�
 </div>
 </div>
 
-<!-- ===== 各类目页面 ===== -->
-
 <!-- FEATURED -->
 <div id="featured" class="page">
 <h2>FeaturedProject</h2>
@@ -233,56 +252,40 @@ onmouseleave="this.querySelector('video').pause()">
 <div id="video" class="page">
 <h2>Video</h2>
 <div class="grid">
-
-<div class="card"
-onclick="openProject('video2.mp4','Video Work','Realtime Visual','Sound Design')"
-onmouseenter="this.querySelector('video').play()"
-onmouseleave="this.querySelector('video').pause()">
-<video src="video2.mp4" muted loop></video>
+<div class="card">
 <span>Video</span>
 </div>
-
 </div>
 </div>
 
 <!-- VISUAL -->
 <div id="visual" class="page">
 <h2>Visual</h2>
-<div class="grid">
-<div class="card"><span>Visual Project</span></div>
-</div>
+<div class="grid"><div class="card"><span>Visual</span></div></div>
 </div>
 
 <!-- CGI -->
 <div id="cgi" class="page">
 <h2>CGI</h2>
-<div class="grid">
-<div class="card"><span>CGI Work</span></div>
-</div>
+<div class="grid"><div class="card"><span>CGI</span></div></div>
 </div>
 
 <!-- INSTALLATION -->
 <div id="installation" class="page">
 <h2>Installation</h2>
-<div class="grid">
-<div class="card"><span>Installation</span></div>
-</div>
+<div class="grid"><div class="card"><span>Installation</span></div></div>
 </div>
 
 <!-- SOUND -->
 <div id="sound" class="page">
 <h2>Sound</h2>
-<div class="grid">
-<div class="card"><span>Sound Project</span></div>
-</div>
+<div class="grid"><div class="card"><span>Sound</span></div></div>
 </div>
 
 <!-- LAB -->
 <div id="lab" class="page">
 <h2>Lab</h2>
-<div class="grid">
-<div class="card"><span>Experiment</span></div>
-</div>
+<div class="grid"><div class="card"><span>Lab</span></div></div>
 </div>
 
 <!-- CONTACT -->
@@ -291,19 +294,15 @@ onmouseleave="this.querySelector('video').pause()">
 <p>Email: jam.mo.404lab@gmail.com</p>
 </div>
 
-<!-- ===== 全屏层 ===== -->
+<!-- 全屏 -->
 <div id="overlay" class="overlay">
-
 <div class="close" onclick="closeProject()">CLOSE</div>
-
 <video id="overlayVideo" controls autoplay></video>
-
 <div class="overlay-info">
 <h2 id="title"></h2>
 <p id="desc"></p>
 <p id="credits"></p>
 </div>
-
 </div>
 
 <script>
