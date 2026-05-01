@@ -34,16 +34,17 @@ transition:.3s;
 color:red;
 }
 
-/* 标题（打印机风） */
+/* 标题（粗无衬线） */
 .main-title{
 text-align:center;
-font-family:"Courier New", monospace;
-font-size:64px;
-letter-spacing:6px;
+font-family:Helvetica, Arial, sans-serif;
+font-weight:900;
+font-size:80px;
+letter-spacing:4px;
 margin:40px 0 10px;
 }
 
-/* brand 视频（无边框） */
+/* brand */
 .brand{
 display:block;
 margin:0 auto 40px;
@@ -53,7 +54,7 @@ object-fit:cover;
 border:none;
 }
 
-/* 头像（只在about） */
+/* avatar */
 .avatar{
 display:block;
 margin:40px auto 60px;
@@ -72,7 +73,7 @@ transform:scale(1.05);
 filter:grayscale(0%);
 }
 
-/* 页面 */
+/* page */
 .page{
 display:none;
 padding:0 10% 100px;
@@ -95,6 +96,13 @@ color:#ddd;
 line-height:1.8;
 }
 
+/* 👉 Role 单行 + 大写 */
+.role-line{
+color:red;
+text-transform:uppercase;
+white-space:nowrap;
+}
+
 /* GRID */
 .grid{
 display:grid;
@@ -102,7 +110,7 @@ grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
 }
 
-/* 卡片 */
+/* card */
 .card{
 position:relative;
 height:200px;
@@ -112,14 +120,12 @@ overflow:hidden;
 cursor:pointer;
 }
 
-/* 视频 */
 .card video{
 width:100%;
 height:100%;
 object-fit:cover;
 }
 
-/* 文本 */
 .card span{
 position:absolute;
 color:#aaa;
@@ -191,10 +197,10 @@ color:#aaa;
 <!-- 标题 -->
 <h1 class="main-title">JAM MO</h1>
 
-<!-- brand（自动播放） -->
+<!-- brand -->
 <video class="brand" src="brand.mp4" autoplay muted loop playsinline preload="auto"></video>
 
-<!-- ===== ABOUT ===== -->
+<!-- ABOUT -->
 <div id="about" class="page active">
 
 <img src="images/avatar.jpg" class="avatar">
@@ -202,18 +208,14 @@ color:#aaa;
 <div class="about">
 
 <div>
-<h3>Practice</h3>
-<p style="color:red;">
-Mutidisciplinary Artist<br>
-Audio-Visual Artist<br>
-3D Artist<br>
-Multimedia Director<br>
-Interactive Developer
+<h3>PRACTICE</h3>
+<p class="role-line">
+MULTIDISCIPLINARY ARTIST / AUDIO-VISUAL ARTIST / 3D ARTIST / MULTIMEDIA DIRECTOR / INTERACTIVE DEVELOPER
 </p>
 </div>
 
 <div>
-<h3>About</h3>
+<h3>ABOUT</h3>
 <p class="typewriter">
 Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice operates within intertwined artistic, musical, and technological contexts to investigate how multiple modes of perception produce experiences of temporal and spatial dislocation.
 His works are primarily realized across concert stages, music festival stages, university-based cultural and art laboratories, theatrical spaces, and museum environments.
