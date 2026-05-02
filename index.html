@@ -41,7 +41,7 @@ position:relative;
 z-index:2;
 }
 
-/* ✅ WebGL / Canvas 背景 */
+/* canvas 背景 */
 #bgCanvas{
 position:fixed;
 top:0;
@@ -50,11 +50,6 @@ width:100%;
 height:100%;
 z-index:0;
 pointer-events:none;
-}
-
-/* 原视频隐藏但作为纹理源 */
-#brandVideo{
-display:none;
 }
 
 /* PAGE */
@@ -80,8 +75,17 @@ grid-template-columns:1fr 2fr 2fr;
 gap:40px;
 }
 
-.role{color:red;font-weight:bold;line-height:1.8;}
-.text{color:#ccc;line-height:1.8;font-family:"Courier New", monospace;}
+.role{
+color:red;
+font-weight:bold;
+line-height:1.8;
+}
+
+.text{
+color:#ccc;
+line-height:1.8;
+font-family:"Courier New", monospace;
+}
 
 /* GRID */
 .grid{
@@ -142,13 +146,18 @@ width:100%;height:100%;object-fit:contain;
 }
 .close{
 position:absolute;
-top:20px;right:30px;
-cursor:pointer;color:#aaa;
+top:20px;
+right:30px;
+cursor:pointer;
+color:#aaa;
 }
 .close:hover{color:red}
 
 /* CONTACT */
-.contact{text-align:center;margin-top:60px;}
+.contact{
+text-align:center;
+margin-top:60px;
+}
 </style>
 </head>
 
@@ -187,11 +196,11 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice investigates how multiple modes of perception produce experiences of temporal and spatial dislocation.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时视觉、声音艺术与交互装置之间的交叉融合，围绕科技与非线性空间展开探索。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、可编程实时视觉、声音艺术与可交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开多维探索，以“计算感知”与“知觉空间”为核心路径，探讨多元感知如何生成时间与空间的错位体验。作品多呈现在演唱会舞台、音乐节、高校实验室、戏剧空间与美术馆。
 </div>
 
 </div>
@@ -230,12 +239,14 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时�
 </div>
 
 <script>
-/* =========================
-   🎛 BRAND 动态背景
-========================= */
+/* ===== Brand 动态背景 ===== */
 const canvas = document.getElementById("bgCanvas")
 const ctx = canvas.getContext("2d")
 const video = document.getElementById("brandVideo")
+
+video.muted = true
+video.playsInline = true
+video.addEventListener("loadeddata", ()=> video.play().catch(()=>{}))
 
 let mouse = {x:0.5,y:0.5}
 
@@ -251,35 +262,38 @@ mouse.x = e.clientX / window.innerWidth
 mouse.y = e.clientY / window.innerHeight
 })
 
+window.addEventListener("touchmove",e=>{
+let t=e.touches[0]
+mouse.x = t.clientX / window.innerWidth
+mouse.y = t.clientY / window.innerHeight
+},{passive:true})
+
 function draw(){
 if(video.readyState >= 2){
 
-let w = canvas.width
-let h = canvas.height
+let w=canvas.width
+let h=canvas.height
+let scale=1.2
+let vw=w*scale
+let vh=h*scale
 
-let dx = (mouse.x-0.5)*100
-let dy = (mouse.y-0.5)*100
+let dx=(mouse.x-0.5)*80
+let dy=(mouse.y-0.5)*80
 
 ctx.clearRect(0,0,w,h)
 
-/* 主图 */
-ctx.globalAlpha = 0.35
-ctx.drawImage(video, dx, dy, w, h)
+ctx.globalAlpha=0.35
+ctx.drawImage(video,-(vw-w)/2+dx,-(vh-h)/2+dy,vw,vh)
 
-/* 叠加偏移（类似 TD feedback） */
-ctx.globalAlpha = 0.15
-ctx.drawImage(video, -dx*0.5, -dy*0.5, w, h)
-
+ctx.globalAlpha=0.15
+ctx.drawImage(video,-(vw-w)/2-dx*0.5,-(vh-h)/2-dy*0.5,vw,vh)
 }
 
 requestAnimationFrame(draw)
 }
 draw()
 
-/* =========================
-   WORKS
-========================= */
-
+/* ===== WORKS ===== */
 function createVideoCard(src,cover,title){
 return `
 <div>
@@ -295,9 +309,7 @@ onclick="openWork('${src}','${title}')">
 </div>`
 }
 
-function playPreview(el){
-el.querySelector("video").play()
-}
+function playPreview(el){el.querySelector("video").play()}
 function stopPreview(el){
 let v=el.querySelector("video")
 v.pause();v.currentTime=0
@@ -355,7 +367,6 @@ el.classList.add('active')
 function openWork(src,title){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById('workPage').classList.add('active')
-
 document.getElementById('workVideo').src=src
 document.getElementById('workTitle').innerText=title
 document.getElementById('workDesc').innerText="Project description..."
