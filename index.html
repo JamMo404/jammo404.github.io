@@ -5,11 +5,12 @@
 <title>jammo</title>
 
 <style>
-body{
+html,body{
 margin:0;
 background:#000;
 color:#fff;
 font-family:Arial, Helvetica, sans-serif;
+overflow-x:hidden; /* ✅ 修复横向溢出 */
 }
 
 /* NAV */
@@ -36,20 +37,28 @@ font-size:72px;
 font-weight:900;
 letter-spacing:6px;
 margin:40px 0 10px;
+position:relative;
+z-index:2;
 }
 
-/* BRAND */
+/* BRAND 背景（修复版） */
 .brand-bg{
-position:absolute;
+position:fixed; /* ✅ 改 fixed */
 top:80px;
 left:50%;
 transform:translateX(-50%) scale(3);
 opacity:0.25;
 pointer-events:none;
+z-index:0;
 }
 
 /* PAGE */
-.page{display:none;padding:0 10% 100px;}
+.page{
+display:none;
+padding:0 10% 100px;
+position:relative;
+z-index:1;
+}
 .page.active{display:block}
 
 /* ABOUT */
@@ -107,14 +116,14 @@ color:#aaa;
 
 .info{margin-top:8px;color:#aaa}
 
-/* WORK PAGE（二级） */
+/* WORK PAGE */
 #workPage video{
 width:100%;
 margin-top:20px;
 cursor:pointer;
 }
 
-/* overlay（图片用） */
+/* OVERLAY */
 .overlay{
 display:none;
 position:fixed;
@@ -133,7 +142,7 @@ cursor:pointer;color:#aaa;
 }
 .close:hover{color:red}
 
-/* contact */
+/* CONTACT */
 .contact{text-align:center;margin-top:60px;}
 </style>
 </head>
@@ -154,6 +163,7 @@ cursor:pointer;color:#aaa;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
+
 <video class="brand-bg" src="brand.mp4" autoplay muted loop playsinline></video>
 
 <!-- ABOUT -->
@@ -199,7 +209,7 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时�
 <div class="contact">jam.mo.404lab@gmail.com</div>
 </div>
 
-<!-- ✅ 二级页面 -->
+<!-- 二级页面 -->
 <div id="workPage" class="page">
 <div style="max-width:900px;margin:auto;padding-top:40px;">
 <h2 id="workTitle"></h2>
@@ -208,7 +218,7 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时�
 </div>
 </div>
 
-<!-- IMAGE OVERLAY -->
+<!-- OVERLAY -->
 <div id="overlay" class="overlay">
 <div class="close" onclick="closeOverlay()">CLOSE</div>
 <img id="overlayImg">
@@ -223,7 +233,7 @@ onmouseenter="playPreview(this)"
 onmouseleave="stopPreview(this)"
 onmousemove="pushEffect(event,this)"
 onclick="openWork('${src}','${title}')">
-<video src="${src}" poster="${cover}" muted loop></video>
+<video src="${src}" poster="${cover}" muted loop playsinline></video>
 <span>${title}</span>
 </div>
 <div class="info">${title}</div>
@@ -233,13 +243,13 @@ onclick="openWork('${src}','${title}')">
 function playPreview(el){
 el.querySelector("video").play()
 }
+
 function stopPreview(el){
 let v=el.querySelector("video")
 v.pause();v.currentTime=0
 el.style.transform="scale(1)"
 }
 
-/* 挤压 */
 function pushEffect(e,el){
 let r=el.getBoundingClientRect()
 let dx=(e.clientX-r.left-r.width/2)/(r.width/2)
@@ -248,7 +258,6 @@ let s=1+0.08-Math.sqrt(dx*dx+dy*dy)*0.1
 el.style.transform=`scale(${s}) translate(${dx*10}px,${dy*10}px)`
 }
 
-/* 自动生成 */
 function loadWorks(){
 let featured='',video='',cgi='',installation='',sound='',lab=''
 
@@ -289,7 +298,6 @@ document.querySelectorAll('.nav a').forEach(a=>a.classList.remove('active'))
 el.classList.add('active')
 }
 
-/* 👉 二级页面 */
 function openWork(src,title){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
 document.getElementById('workPage').classList.add('active')
@@ -299,7 +307,6 @@ document.getElementById('workTitle').innerText=title
 document.getElementById('workDesc').innerText="Project description..."
 }
 
-/* 图片 */
 function openImage(src){
 document.getElementById('overlay').style.display='block'
 document.getElementById('overlayImg').src=src
