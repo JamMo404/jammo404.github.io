@@ -10,7 +10,7 @@ margin:0;
 background:#000;
 color:#fff;
 font-family:Arial, Helvetica, sans-serif;
-overflow-x:hidden; /* ✅ 修复横向溢出 */
+overflow-x:hidden;
 }
 
 /* NAV */
@@ -41,15 +41,20 @@ position:relative;
 z-index:2;
 }
 
-/* BRAND 背景（修复版） */
-.brand-bg{
-position:fixed; /* ✅ 改 fixed */
-top:80px;
-left:50%;
-transform:translateX(-50%) scale(3);
-opacity:0.25;
-pointer-events:none;
+/* ✅ WebGL / Canvas 背景 */
+#bgCanvas{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
 z-index:0;
+pointer-events:none;
+}
+
+/* 原视频隐藏但作为纹理源 */
+#brandVideo{
+display:none;
 }
 
 /* PAGE */
@@ -57,7 +62,7 @@ z-index:0;
 display:none;
 padding:0 10% 100px;
 position:relative;
-z-index:1;
+z-index:2;
 }
 .page.active{display:block}
 
@@ -149,6 +154,9 @@ cursor:pointer;color:#aaa;
 
 <body>
 
+<canvas id="bgCanvas"></canvas>
+<video id="brandVideo" src="brand.mp4" autoplay muted loop playsinline></video>
+
 <!-- NAV -->
 <div class="nav">
 <a onclick="showPage('about',this)" class="active">About</a>
@@ -163,8 +171,6 @@ cursor:pointer;color:#aaa;
 </div>
 
 <h1 class="main-title">JAM MO</h1>
-
-<video class="brand-bg" src="brand.mp4" autoplay muted loop playsinline></video>
 
 <!-- ABOUT -->
 <div id="about" class="page active">
@@ -181,11 +187,11 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice investigates how multiple modes of perception produce experiences of temporal and spatial dislocation.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时视觉、声音艺术与交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开，以“计算感知”与“知觉空间”为核心路径，探讨多元感知如何生成时间与空间的错位体验。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时视觉、声音艺术与交互装置之间的交叉融合，围绕科技与非线性空间展开探索。
 </div>
 
 </div>
@@ -204,12 +210,11 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时�
 <div id="sound" class="page"><div class="grid" id="soundGrid"></div></div>
 <div id="lab" class="page"><div class="grid" id="labGrid"></div></div>
 
-<!-- CONTACT -->
 <div id="contact" class="page">
 <div class="contact">jam.mo.404lab@gmail.com</div>
 </div>
 
-<!-- 二级页面 -->
+<!-- WORK PAGE -->
 <div id="workPage" class="page">
 <div style="max-width:900px;margin:auto;padding-top:40px;">
 <h2 id="workTitle"></h2>
@@ -225,6 +230,56 @@ Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时�
 </div>
 
 <script>
+/* =========================
+   🎛 BRAND 动态背景
+========================= */
+const canvas = document.getElementById("bgCanvas")
+const ctx = canvas.getContext("2d")
+const video = document.getElementById("brandVideo")
+
+let mouse = {x:0.5,y:0.5}
+
+function resize(){
+canvas.width = window.innerWidth
+canvas.height = window.innerHeight
+}
+resize()
+window.addEventListener("resize",resize)
+
+window.addEventListener("mousemove",e=>{
+mouse.x = e.clientX / window.innerWidth
+mouse.y = e.clientY / window.innerHeight
+})
+
+function draw(){
+if(video.readyState >= 2){
+
+let w = canvas.width
+let h = canvas.height
+
+let dx = (mouse.x-0.5)*100
+let dy = (mouse.y-0.5)*100
+
+ctx.clearRect(0,0,w,h)
+
+/* 主图 */
+ctx.globalAlpha = 0.35
+ctx.drawImage(video, dx, dy, w, h)
+
+/* 叠加偏移（类似 TD feedback） */
+ctx.globalAlpha = 0.15
+ctx.drawImage(video, -dx*0.5, -dy*0.5, w, h)
+
+}
+
+requestAnimationFrame(draw)
+}
+draw()
+
+/* =========================
+   WORKS
+========================= */
+
 function createVideoCard(src,cover,title){
 return `
 <div>
@@ -243,7 +298,6 @@ onclick="openWork('${src}','${title}')">
 function playPreview(el){
 el.querySelector("video").play()
 }
-
 function stopPreview(el){
 let v=el.querySelector("video")
 v.pause();v.currentTime=0
