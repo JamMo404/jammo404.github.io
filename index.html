@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <title>jammo</title>
 
+<!-- ✅ 极细无衬线字体 -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200&display=swap" rel="stylesheet">
+
 <style>
 html,body{
 margin:0;
@@ -30,18 +33,19 @@ cursor:pointer;
 .nav a.active,
 .nav a:hover{color:red}
 
-/* TITLE */
+/* TITLE（极瘦） */
 .main-title{
 text-align:center;
 font-size:72px;
-font-weight:900;
-letter-spacing:6px;
+font-weight:100;
+letter-spacing:10px;
 margin:40px 0 10px;
+font-family:'Inter', sans-serif;
 position:relative;
 z-index:2;
 }
 
-/* BRAND（跟随鼠标） */
+/* BRAND */
 .brand-bg{
 position:fixed;
 top:50%;
@@ -86,7 +90,7 @@ grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
 gap:30px;
 }
 
-/* FEATURED 两列 */
+/* FEATURED */
 .featured-grid{
 display:grid;
 grid-template-columns:repeat(2,1fr);
@@ -145,6 +149,14 @@ cursor:pointer;color:#aaa;
 
 /* CONTACT */
 .contact{text-align:center;margin-top:60px;}
+
+/* 手机优化 */
+@media(max-width:768px){
+.main-title{
+font-weight:200;
+letter-spacing:6px;
+}
+}
 </style>
 </head>
 
@@ -181,11 +193,11 @@ INTERACTIVE DEVELOPER
 </div>
 
 <div class="text">
-Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in computational perception and perceptual space, his practice investigates how perception reshapes time and space.
+Jam Mo is a multidisciplinary artist whose practice focuses on the intersection of CGI animation, programmable real-time visuals, sound art, and interactive installations. His work engages in multi-dimensional explorations of technology, the sense of the supernatural, and non-linear spatial narratives. Grounded in a conceptual framework of computational perception and perceptual space, his practice investigates how multiple modes of perception produce experiences of temporal and spatial dislocation.
 </div>
 
 <div class="text">
-Jam Mo是一位多学科艺术创作者，聚焦CGI、实时视觉、声音与交互装置。创作围绕科技与非线性空间展开，以“计算感知”与“知觉空间”为核心，探索多元感知如何生成时间与空间的错位体验。
+Jam Mo是一位多学科艺术创作者，其实践聚焦于CGI动画、实时视觉、声音艺术与交互装置之间的交叉融合。创作围绕科技、超自然感与非线性空间叙事展开，以“计算感知”与“知觉空间”为核心路径，探讨多元感知如何生成时间与空间的错位体验。
 </div>
 
 </div>
@@ -224,36 +236,29 @@ Jam Mo是一位多学科艺术创作者，聚焦CGI、实时视觉、声音与�
 </div>
 
 <script>
-/* ===== 平滑鼠标跟随（核心） ===== */
-let targetX = 0, targetY = 0
-let currentX = 0, currentY = 0
-
-document.addEventListener('mousemove', e=>{
-targetX = (e.clientX / window.innerWidth - 0.5) * 60
-targetY = (e.clientY / window.innerHeight - 0.5) * 60
+/* 背景跟随 */
+let tx=0,ty=0,cx=0,cy=0
+document.addEventListener('mousemove',e=>{
+tx=(e.clientX/window.innerWidth-0.5)*60
+ty=(e.clientY/window.innerHeight-0.5)*60
 })
-
-function animate(){
-currentX += (targetX - currentX) * 0.08
-currentY += (targetY - currentY) * 0.08
-
-let brand = document.getElementById("brand")
-brand.style.transform = `
-translate(calc(-50% + ${currentX}px), calc(-50% + ${currentY}px)) scale(3)
-`
-
-requestAnimationFrame(animate)
+function loop(){
+cx+=(tx-cx)*0.08
+cy+=(ty-cy)*0.08
+document.getElementById("brand").style.transform=
+`translate(calc(-50% + ${cx}px), calc(-50% + ${cy}px)) scale(3)`
+requestAnimationFrame(loop)
 }
-animate()
+loop()
 
-/* ===== 你的原功能 ===== */
+/* 卡片 */
 function createVideoCard(src,cover,title){
 return `
 <div>
 <div class="card"
-onmouseenter="playPreview(this)"
-onmouseleave="stopPreview(this)"
-onmousemove="pushEffect(event,this)"
+onmouseenter="this.querySelector('video').play()"
+onmouseleave="let v=this.querySelector('video');v.pause();v.currentTime=0"
+onmousemove="push(event,this)"
 onclick="openWork('${src}','${title}')">
 <video src="${src}" poster="${cover}" muted loop playsinline></video>
 <span>${title}</span>
@@ -262,51 +267,43 @@ onclick="openWork('${src}','${title}')">
 </div>`
 }
 
-function playPreview(el){
-el.querySelector("video").play()
-}
-function stopPreview(el){
-let v=el.querySelector("video")
-v.pause();v.currentTime=0
-el.style.transform="scale(1)"
-}
-
-function pushEffect(e,el){
+function push(e,el){
 let r=el.getBoundingClientRect()
 let dx=(e.clientX-r.left-r.width/2)/(r.width/2)
 let dy=(e.clientY-r.top-r.height/2)/(r.height/2)
-let s=1+0.08-Math.sqrt(dx*dx+dy*dy)*0.1
+let s=1.08-Math.sqrt(dx*dx+dy*dy)*0.1
 el.style.transform=`scale(${s}) translate(${dx*10}px,${dy*10}px)`
 }
 
-function loadWorks(){
-let featured='',video='',cgi='',installation='',sound='',lab=''
-for(let i=1;i<=10;i++){
-let n=String(i).padStart(3,'0')
-featured+=createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
-video+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
-cgi+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
-installation+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
-sound+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
-lab+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
+/* 自动生成 */
+function load(){
+let f='',v='',c='',i='',s='',l=''
+for(let x=1;x<=10;x++){
+let n=String(x).padStart(3,'0')
+f+=createVideoCard(`videoall/featured${n}.mp4`,`images/featuredcover${n}.jpg`,`featured${n}`)
+v+=createVideoCard(`videoall/video${n}.mp4`,`images/videocover${n}.jpg`,`video${n}`)
+c+=createVideoCard(`videoall/cgi${n}.mp4`,`images/cgicover${n}.jpg`,`cgi${n}`)
+i+=createVideoCard(`videoall/installation${n}.mp4`,`images/installationcover${n}.jpg`,`installation${n}`)
+s+=createVideoCard(`videoall/sound${n}.mp4`,`images/soundcover${n}.jpg`,`sound${n}`)
+l+=createVideoCard(`videoall/lab${n}.mp4`,`images/labcover${n}.jpg`,`lab${n}`)
 }
-document.getElementById('featuredGrid').innerHTML=featured
-document.getElementById('videoGrid').innerHTML=video
-document.getElementById('cgiGrid').innerHTML=cgi
-document.getElementById('installationGrid').innerHTML=installation
-document.getElementById('soundGrid').innerHTML=sound
-document.getElementById('labGrid').innerHTML=lab
+featuredGrid.innerHTML=f
+videoGrid.innerHTML=v
+cgiGrid.innerHTML=c
+installationGrid.innerHTML=i
+soundGrid.innerHTML=s
+labGrid.innerHTML=l
 
-let visual=''
-for(let i=1;i<=10;i++){
-let n=String(i).padStart(3,'0')
-visual+=`<div><div class="card" onclick="openImage('images/visual${n}.jpg')">
+let vis=''
+for(let x=1;x<=10;x++){
+let n=String(x).padStart(3,'0')
+vis+=`<div><div class="card" onclick="openImage('images/visual${n}.jpg')">
 <img src="images/visual${n}.jpg"><span>visual${n}</span></div>
 <div class="info">visual${n}</div></div>`
 }
-document.getElementById('visualGrid').innerHTML=visual
+visualGrid.innerHTML=vis
 }
-window.onload=loadWorks
+window.onload=load
 
 function showPage(id,el){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
@@ -317,18 +314,18 @@ el.classList.add('active')
 
 function openWork(src,title){
 document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'))
-document.getElementById('workPage').classList.add('active')
-document.getElementById('workVideo').src=src
-document.getElementById('workTitle').innerText=title
-document.getElementById('workDesc').innerText="Project description..."
+workPage.classList.add('active')
+workVideo.src=src
+workTitle.innerText=title
+workDesc.innerText="Project description..."
 }
 
 function openImage(src){
-document.getElementById('overlay').style.display='block'
-document.getElementById('overlayImg').src=src
+overlay.style.display='block'
+overlayImg.src=src
 }
 function closeOverlay(){
-document.getElementById('overlay').style.display='none'
+overlay.style.display='none'
 }
 </script>
 
